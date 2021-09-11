@@ -18,7 +18,6 @@ def test_parse_time():
 
 def test_gpx_parser():
 
-    print(__file__)
     gpx_parser = gps_parser.GpxParser("../../gpx_file/2021-08-29-06.21.16.gpx")
 
     track_object = gpx_parser.get_raw_track_object()
