@@ -1,16 +1,16 @@
-# This is a sample Python script.
+from geoanalyzer.tracks import gps_parser
+from geoanalyzer.tracks import track_analyzer
+from geoanalyzer.tracks.track_analyzer import TrackAnalyzer
+from visualizartion.map_drawer import FoliumMapDrawer
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+gpx_parser = gps_parser.GpxParser("./gpx_file/2021-08-29-06.21.16.gpx")
+
+tracks_object = TrackAnalyzer(gpx_parser.get_raw_track_object())
+tracks = tracks_object.get_main_track()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+mapDrawer = FoliumMapDrawer(tracks.get_start_point().get_lat(), tracks.get_start_point().get_lon())
+mapDrawer.add_tracks(tracks, weight=4)
+mapDrawer.draw_points_on_map(tracks_object.get_rest_point_list(), point_type='circle', point_info='休息點', point_color='green', point_radius=10, alpha=0.3)
+mapDrawer.draw_points_on_map(tracks_object.get_waypoint_list(), point_type='marker', point_info='', point_color='blue', point_radius=None, alpha=None)
+mapDrawer.save('./output_map/map_2021-08-29-06.21.16')

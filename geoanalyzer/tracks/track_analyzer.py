@@ -247,11 +247,6 @@ def find_rest_point(input_list):
 
 
 
-
-
-
-
-
 class TrackAnalyzer:
 
     def __init__(self, input_raw_track_object):
@@ -259,7 +254,23 @@ class TrackAnalyzer:
         input_raw_track_point_list = input_raw_track_object.get_main_tracks().get_main_tracks_points_list()
         smooth_track_list = smoothing_tracks(input_raw_track_point_list)
 
-    # def do_analyzing():
+        self._analyzed_tracks_object = do_analyzing(smooth_track_list)
+        self._analyzed_tracks_object.set_waypoint_list(input_raw_track_object.get_waypoint_list())
+        self._analyzed_tracks_object.set_rest_point_list(
+            find_rest_point(self._analyzed_tracks_object.get_main_tracks().get_main_tracks_points_list())
+        )
+
+    def get_main_track(self):
+        return self._analyzed_tracks_object.get_main_tracks()
+
+    def get_main_track_list(self):
+        return self._analyzed_tracks_object.get_main_tracks()
+
+    def get_waypoint_list(self):
+        return self._analyzed_tracks_object.get_waypoint_list()
+
+    def get_rest_point_list(self):
+        return self._analyzed_tracks_object.get_rest_point_list()
 
 
 
