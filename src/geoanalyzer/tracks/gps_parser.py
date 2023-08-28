@@ -95,12 +95,6 @@ class GpxParser:
     def get_raw_track_object(self):
         return self._target_track_object
 
-    def is_internal_file_exist(self):
-        if os.path.getsize(self._infile) == 0:
-            return False
-        else:
-            return True
-
     @staticmethod
     def _gpx_extract_point_time_str_utc(s):
         try:

@@ -1,8 +1,8 @@
 import datetime
 import math
 
-class BasicPoint:
 
+class BasicPoint:
     def __init__(self, time=None, lat=None, lon=None, elev=None):
         if time is not None:
             self._time = time
@@ -16,7 +16,6 @@ class BasicPoint:
             self._lon = None
             self._elev = None
             self._is_empty = True
-
 
     def get_point_time(self):
         return self._time
@@ -33,6 +32,7 @@ class BasicPoint:
     def is_enpty(self):
         return self._is_empty
 
+
 class WayPoint(BasicPoint):
     def __init__(self, time=None, lat=None, lon=None, elev=None, note=None):
         super(WayPoint, self).__init__(time, lat, lon, elev)
@@ -40,6 +40,7 @@ class WayPoint(BasicPoint):
 
     def get_note(self):
         return self._note
+
 
 class RawTrkPoint(BasicPoint):
     """
@@ -118,6 +119,7 @@ class AnalyzedTrkPoint(BasicPoint):
         :return: list[Vx, Vy, Vz]
         """
         return [self._dx/self._dt, self._dy/self._dt, self._dz/self._dt]
+
 
 class RestTrkPoint(BasicPoint):
     def __init__(self, time, lat, lon, elev, start_time, end_time):

@@ -49,6 +49,7 @@ def smoothing_tracks(input_track_point_list) -> list:
         )
     return averaged_tracks_list
 
+
 def do_analyzing(input_track_point_list):
 
     target_analyzing_track_object = AnalyzedTrackObject()
@@ -83,6 +84,7 @@ def do_analyzing(input_track_point_list):
         )
 
     return target_analyzing_track_object
+
 
 def find_rest_point(input_list):
 
@@ -244,7 +246,6 @@ def find_rest_point(input_list):
 
     print("Finished of scanning all the point")
     return rest_point_list
-
 
 
 class TrackAnalyzer:
