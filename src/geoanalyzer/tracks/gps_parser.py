@@ -3,7 +3,7 @@ import os
 
 from xml.dom import minidom
 
-from geoanalyzer.tracks import track_objects
+from src.geoanalyzer.tracks import track_objects
 
 
 def parse_gpx(input_gpx_file):

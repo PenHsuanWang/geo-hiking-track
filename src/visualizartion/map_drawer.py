@@ -1,5 +1,5 @@
 import folium
-from geoanalyzer.tracks.track_objects import RestTrkPoint
+from src.geoanalyzer.tracks.track_objects import RestTrkPoint
 
 class FoliumMapDrawer:
 

@@ -1,6 +1,6 @@
 import datetime
 import math
-from geoanalyzer.tracks.track_objects import RawTrkPoint, RawTracks, AnalyzedTrkPoint, AnalyzedTrackObject, TrackPointVector, RestTrkPoint, RestTrkPointCandidate, SeedRestPoint
+from src.geoanalyzer.tracks.track_objects import RawTrkPoint, RawTracks, AnalyzedTrkPoint, AnalyzedTrackObject, TrackPointVector, RestTrkPoint, RestTrkPointCandidate, SeedRestPoint
 
 
 def sum_delta_between_every_element(input_list):
