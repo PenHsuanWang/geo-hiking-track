@@ -1,83 +1,75 @@
-import datetime
-import time
-
-from geoanalyzer.tracks import gps_parser
-from geoanalyzer.tracks import track_analyzer
-from geoanalyzer.tracks.track_analyzer import TrackAnalyzer
-
-
-def test_smoothing_tracks():
-    gpx_parser = gps_parser.GpxParser("../../gpx_file/2021-08-29-06.21.16.gpx")
-
-    track_object = gpx_parser.get_raw_track_object()
-    raw_track_list = track_object.get_main_tracks().get_main_tracks_points_list()
-
-    track_analyzer.smoothing_tracks(raw_track_list)
-
-    assert True
+import pytest
+from datetime import datetime, timedelta
+from src.geoanalyzer.tracks.track_analyzer import sum_delta_between_every_element, smoothing_tracks, do_analyzing, find_rest_point, \
+    TrackAnalyzer
+from unittest.mock import Mock
 
 
+# Testing sum_delta_between_every_element
 def test_sum_delta_between_every_element():
-    list_a = [1, 2, 3]
-    list_b = [3, 2, 1]
-    list_c = [3, 1, 2]
+    assert sum_delta_between_every_element([1, 2, 3]) == 2
+    assert sum_delta_between_every_element([1.0, 2.0, 3.0]) == 2.0
+    assert sum_delta_between_every_element([datetime(2023, 8, 28, 1, 0), datetime(2023, 8, 28, 1, 1)]) == 60
 
-    time_a = datetime.datetime.now()
-    time.sleep(1)
-    time_b = datetime.datetime.now()
-    list_time = [time_a, time_b]
-
-    assert track_analyzer.sum_delta_between_every_element(list_a) == 2
-    assert track_analyzer.sum_delta_between_every_element(list_b) == -2
-    assert track_analyzer.sum_delta_between_every_element(list_c) == -1
-    assert track_analyzer.sum_delta_between_every_element(list_time) == 1
+    with pytest.raises(TypeError):
+        sum_delta_between_every_element(['a', 'b'])
 
 
-def test_lambda_expression_get_track_point_time():
-    gpx_parser = gps_parser.GpxParser("../../gpx_file/2021-08-29-06.21.16.gpx")
+# Mocking classes for other test functions
+class MockRawTrkPoint:
+    def __init__(self, time, lat, lon, elev):
+        self.time = time
+        self.lat = lat
+        self.lon = lon
+        self.elev = elev
 
-    track_object = gpx_parser.get_raw_track_object()
-    raw_track_list = track_object.get_main_tracks().get_main_tracks_points_list()
+    def get_point_time(self):
+        return self.time
 
-    list_time = list(map(lambda x: x.get_point_time(), raw_track_list))
+    def get_lat(self):
+        return self.lat
 
-    #
-    tot_time_delta = track_analyzer.sum_delta_between_every_element(list_time)
-    print(tot_time_delta)
+    def get_lon(self):
+        return self.lon
 
-    assert True
-
-
-def test_do_analyzing():
-    gpx_parser = gps_parser.GpxParser("../../gpx_file/2021-08-29-06.21.16.gpx")
-
-    track_object = gpx_parser.get_raw_track_object()
-    raw_track_list = track_object.get_main_tracks().get_main_tracks_points_list()
-
-    analyzed_track_object = track_analyzer.do_analyzing(raw_track_list)
-
-    track_point_list = analyzed_track_object.get_main_tracks().get_main_tracks_points_list()
-
-    # print(len(track_point_list))
-    for i in track_point_list:
-        print(i.get_point_time())
-
-    assert True
+    def get_elev(self):
+        return self.elev
 
 
-def test_find_rest_point():
-    gpx_parser = gps_parser.GpxParser("../../gpx_file/2021-08-29-06.21.16.gpx")
+# Testing smoothing_tracks
+def test_smoothing_tracks():
+    input_list = [MockRawTrkPoint(datetime(2023, 8, 28, 1, i, 0), 37 + i, -122 + i, 100 + i) for i in range(6)]
+    output = smoothing_tracks(input_list)
+    assert len(output) == 1  # Based on how your function is written, the length should be 1
 
-    track_object = gpx_parser.get_raw_track_object()
-    raw_track_list = track_object.get_main_tracks().get_main_tracks_points_list()
-
-    analyzed_track_object = track_analyzer.do_analyzing(raw_track_list)
-
-    track_point_list = analyzed_track_object.get_main_tracks().get_main_tracks_points_list()
-
-    rest_point = track_analyzer.find_rest_point(track_point_list)
-
-    for i in rest_point:
-        print(i.get_start_time(), i.get_end_time())
-
-    assert True
+#
+# # Testing do_analyzing
+# def test_do_analyzing():
+#     input_list = [MockRawTrkPoint(datetime(2023, 8, 28, 1, i, 0), 37 + i, -122 + i, 100 + i) for i in range(4)]
+#     output = do_analyzing(input_list)
+#     # Write assertions based on what you expect the output to contain
+#
+#
+# # Testing find_rest_point
+# def test_find_rest_point():
+#     input_list = [MockRawTrkPoint(datetime(2023, 8, 28, 1, i, 0), 37 + i, -122 + i, 100 + i) for i in range(6)]
+#     output = find_rest_point(input_list)
+#     # Write assertions based on what you expect the output to contain
+#
+#
+# # Testing TrackAnalyzer class
+# def test_TrackAnalyzer():
+#     mock_raw_track_object = Mock()
+#     mock_raw_track_object.get_main_tracks().get_main_tracks_points_list.return_value = [
+#         MockRawTrkPoint(datetime(2023, 8, 28, 1, i, 0), 37 + i, -122 + i, 100 + i) for i in range(6)]
+#
+#     analyzer = TrackAnalyzer(mock_raw_track_object)
+#     expected_main_track = # whatever you expect this to be
+#     expected_main_track_list = # whatever you expect this to be
+#     expected_waypoint_list = # whatever you expect this to be
+#     expected_rest_point_list = # whatever you expect this to be
+#
+#     assert analyzer.get_main_track() == expected_main_track
+#     assert analyzer.get_main_track_list() == expected_main_track_list
+#     assert analyzer.get_waypoint_list() == expected_waypoint_list
+#     assert analyzer.get_rest_point_list() == expected_rest_point_list

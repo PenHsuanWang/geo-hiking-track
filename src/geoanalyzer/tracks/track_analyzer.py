@@ -273,14 +273,3 @@ class TrackAnalyzer:
     def get_rest_point_list(self):
         return self._analyzed_tracks_object.get_rest_point_list()
 
-
-
-
-
-
-
-
-
-
-
-
