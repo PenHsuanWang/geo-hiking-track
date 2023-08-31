@@ -11,7 +11,7 @@ class RawTracks(BasicTracks):
 
         self._main_track_points_list = []
 
-    def add_track_point(self, raw_track_point):
+    def add_track_point(self, raw_track_point: RawTrkPoint):
 
         if isinstance(raw_track_point, RawTrkPoint):
             self._main_track_points_list.append(raw_track_point)

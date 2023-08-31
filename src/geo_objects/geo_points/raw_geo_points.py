@@ -4,7 +4,7 @@ The basic information of a point is time, latitude, longitude, elevation.
 for waypoint, addition point information is note.
 """
 
-from src.geo_objects.geo_points.base_point import BasicPoint
+from src.geo_objects.geo_points.basic_point import BasicPoint
 
 
 class WayPoint(BasicPoint):

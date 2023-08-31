@@ -1,4 +1,7 @@
 
+from src.geo_objects.geo_points.basic_point import BasicPoint
+
+
 class BasicTracks:
 
     def __init__(self):
@@ -7,8 +10,8 @@ class BasicTracks:
         """
         self._main_track_points_list = []
 
-    def add_track_point(self, BasicPoint):
-        self._main_track_points_list.append(BasicPoint)
+    def add_track_point(self, trk_point: BasicPoint):
+        self._main_track_points_list.append(trk_point)
 
     def get_track_point(self, i):
         return self._main_track_points_list[i]
@@ -20,10 +23,10 @@ class BasicTracks:
         return self._main_track_points_list[-1]
 
     def get_start_time(self):
-        return self.get_start_point().get_point_time()
+        return self.get_start_point().time
 
     def get_end_time(self):
-        return self.get_end_point().get_point_time()
+        return self.get_end_point().time
 
     def get_total_time_spend(self):
         """

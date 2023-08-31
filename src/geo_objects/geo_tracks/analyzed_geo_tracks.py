@@ -16,7 +16,7 @@ class AnalyzedTracks(BasicTracks):
 
         self._main_track_points_list = []
 
-    def add_track_point(self, analyzed_trk_point):
+    def add_track_point(self, analyzed_trk_point: AnalyzedTrkPoint):
         if isinstance(analyzed_trk_point, AnalyzedTrkPoint):
             self._main_track_points_list.append(analyzed_trk_point)
         else:

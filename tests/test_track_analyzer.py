@@ -16,24 +16,24 @@ def test_sum_delta_between_every_element():
 
 
 # Mocking classes for other test functions
-class MockRawTrkPoint:
-    def __init__(self, time, lat, lon, elev):
-        self.time = time
-        self.lat = lat
-        self.lon = lon
-        self.elev = elev
-
-    def get_point_time(self):
-        return self.time
-
-    def get_lat(self):
-        return self.lat
-
-    def get_lon(self):
-        return self.lon
-
-    def get_elev(self):
-        return self.elev
+# class MockRawTrkPoint:
+#     def __init__(self, time, lat, lon, elev):
+#         self.time = time
+#         self.lat = lat
+#         self.lon = lon
+#         self.elev = elev
+#
+#     def get_point_time(self):
+#         return self.time
+#
+#     def get_lat(self):
+#         return self.lat
+#
+#     def get_lon(self):
+#         return self.lon
+#
+#     def get_elev(self):
+#         return self.elev
 
 
 # Testing smoothing_tracks

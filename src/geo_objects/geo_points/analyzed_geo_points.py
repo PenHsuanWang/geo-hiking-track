@@ -115,12 +115,12 @@ class RestTrkPointCandidate:
             print("Using Rest Point finder should provided Analyzed point")
             raise TypeError
 
-        self._start_time = first_point.get_point_time()
+        self._start_time = first_point.time
         self._point_count = 1
 
-        self._accumulated_lat = first_point.get_lat()
-        self._accumulated_lon = first_point.get_lon()
-        self._accumulated_elev = first_point.get_elev()
+        self._accumulated_lat = first_point.lat
+        self._accumulated_lon = first_point.lon
+        self._accumulated_elev = first_point.elev
 
         self._tot_delta_x = 0
         self._tot_delta_y = 0
@@ -131,7 +131,7 @@ class RestTrkPointCandidate:
         :param input_point: AnalyzedTrkPoint
         :return: seconds
         """
-        time_spend = input_point.get_point_time() - self._start_time
+        time_spend = input_point.time - self._start_time
         return time_spend.seconds
 
     def add_candidate(self, input_point: AnalyzedTrkPoint):
@@ -139,11 +139,11 @@ class RestTrkPointCandidate:
             self._point_count += 1
             self._tot_delta_x += input_point.get_delta_x()
             self._tot_delta_y += input_point.get_delta_y()
-            self._last_point_time = input_point.get_point_time()
+            self._last_point_time = input_point.time
 
-            self._accumulated_lat += input_point.get_lat()
-            self._accumulated_lon += input_point.get_lon()
-            self._accumulated_elev += input_point.get_elev()
+            self._accumulated_lat += input_point.lat
+            self._accumulated_lon += input_point.lon
+            self._accumulated_elev += input_point.elev
 
         else:
             raise TypeError
@@ -194,14 +194,18 @@ class SeedRestPoint:
         self._elev = elev
         self._start_time = start_time
 
-    def get_lat(self):
+    @property
+    def lat(self):
         return self._lat
 
-    def get_lon(self):
+    @property
+    def lon(self):
         return self._lon
 
-    def get_elev(self):
+    @property
+    def elev(self):
         return self._elev
 
-    def get_start_time(self):
+    @property
+    def start_time(self):
         return self._start_time
