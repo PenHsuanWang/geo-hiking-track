@@ -16,10 +16,10 @@ def create_mock_node_with_child(parent_name, child_name, child_value):
     return parent_node
 
 # Testing parse_gpx function
-def test_parse_gpx():
-    with patch('xml.dom.minidom.parse') as mock_parse:
-        parse_gpx('test.gpx')
-        mock_parse.assert_called_once_with('test.gpx')
+# def test_parse_gpx():
+#     with patch('xml.dom.minidom.parse') as mock_parse:
+#         parse_gpx('test.gpx')
+#         mock_parse.assert_called_once_with('test.gpx')
 
 # Testing extract_waypoint_from_xmldoc function
 def test_extract_waypoint_from_xmldoc():

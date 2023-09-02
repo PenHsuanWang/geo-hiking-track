@@ -1,6 +1,9 @@
 import datetime
 import math
-from src.geoanalyzer.tracks.track_objects import RawTrkPoint, RawTracks, AnalyzedTrkPoint, AnalyzedTrackObject, TrackPointVector, RestTrkPoint, RestTrkPointCandidate, SeedRestPoint
+# from src.geoanalyzer.tracks.track_objects import RawTrkPoint, RawTracks, AnalyzedTrkPoint, AnalyzedTrackObject, TrackPointVector, RestTrkPoint, RestTrkPointCandidate, SeedRestPoint
+from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
+from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate
+from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
 
 
 def sum_delta_between_every_element(input_list):
@@ -29,11 +32,11 @@ def smoothing_tracks(input_track_point_list) -> list:
     for i in range(len(raw_track_point_list) - 5):
         track_point_list_segment = raw_track_point_list[i:i+5]
 
-        track_point_time = track_point_list_segment[2].get_point_time()
+        track_point_time = track_point_list_segment[2].time
 
-        list_segment_lat = list(map(lambda x: x.get_lat(), track_point_list_segment))
-        list_segment_lon = list(map(lambda x: x.get_lon(), track_point_list_segment))
-        list_segment_ele = list(map(lambda x: x.get_elev(), track_point_list_segment))
+        list_segment_lat = list(map(lambda x: x.lat, track_point_list_segment))
+        list_segment_lon = list(map(lambda x: x.lon, track_point_list_segment))
+        list_segment_ele = list(map(lambda x: x.elev, track_point_list_segment))
 
         average_lat = average(list_segment_lat)
         average_lon = average(list_segment_lon)
@@ -58,10 +61,10 @@ def do_analyzing(input_track_point_list):
     for i in range(len(raw_track_point_list)-3):
         track_point_list_segment = raw_track_point_list[i:i+3]
 
-        list_segment_lat = list(map(lambda x: x.get_lat(), track_point_list_segment))
-        list_segment_lon = list(map(lambda x: x.get_lon(), track_point_list_segment))
-        list_segment_elev = list(map(lambda x: x.get_elev(), track_point_list_segment))
-        list_segment_time = list(map(lambda x: x.get_point_time(), track_point_list_segment))
+        list_segment_lat = list(map(lambda x: x.lat, track_point_list_segment))
+        list_segment_lon = list(map(lambda x: x.lon, track_point_list_segment))
+        list_segment_elev = list(map(lambda x: x.elev, track_point_list_segment))
+        list_segment_time = list(map(lambda x: x.time, track_point_list_segment))
 
         # 1 degree is 101751 meters in Lon direction
         delta_x = sum_delta_between_every_element(list_segment_lon)/(len(list_segment_lon)-1) * 101751
@@ -72,10 +75,10 @@ def do_analyzing(input_track_point_list):
 
         target_analyzing_track_object.add_track_point(
             AnalyzedTrkPoint(
-                track_point_list_segment[1].get_point_time(),
-                track_point_list_segment[1].get_lat(),
-                track_point_list_segment[1].get_lon(),
-                track_point_list_segment[1].get_elev(),
+                track_point_list_segment[1].time,
+                track_point_list_segment[1].lat,
+                track_point_list_segment[1].lon,
+                track_point_list_segment[1].elev,
                 delta_x,
                 delta_y,
                 delta_z,
@@ -94,7 +97,7 @@ def find_rest_point(input_list):
 
     Rest Point Candidate:
         First RestPointCandidate:
-            the point speed X and speed Y < 0.1 can be treat as first RestPointCandidate.
+            the point speed X and speed Y < 0.1 can be treated as first RestPointCandidate.
         Second RestPointCandidate:
             the second RestPointCandidate's speed X and speed Y should < 0.1 also => two continuous point with low speed
         Following Point:
@@ -193,33 +196,33 @@ def find_rest_point(input_list):
                 if not (within 20 meter apart from seed center), pass this iteration (continue)
                 if yes, complete this rest point collection, flush rest point and reset the seed.
                 """
-                x_shift = math.fabs((i_track_point.get_lon()-seed_rest_point.get_lon())*110751)
-                y_shift = math.fabs((i_track_point.get_lat()-seed_rest_point.get_lat())*110757)
+                x_shift = math.fabs((i_track_point.lon-seed_rest_point.lon)*110751)
+                y_shift = math.fabs((i_track_point.lat-seed_rest_point.lat)*110757)
                 if x_shift < 20 and y_shift < 20:
                     continue
                 else:
                     # Stop to collect resting point,
                     # flush and delete all collecting object
 
-                    if len(rest_point_list) > 0 and (seed_rest_point.get_start_time() - rest_point_list[-1].get_end_time()).seconds < 120:
+                    if len(rest_point_list) > 0 and (seed_rest_point.start_time - rest_point_list[-1].get_end_time()).seconds < 120:
                         #============================================================================================#
                         # If the seed rest point's start time is too close to previous rest point's end time         #
                         # The new seeding point maybe the same rest point, Do not append this seed as new rest point #
                         # Update the last rest point in list's setting the end time to current point time            #
                         #============================================================================================#
-                        rest_point_list[-1].update_end_time(i_track_point.get_point_time())
+                        rest_point_list[-1].update_end_time(i_track_point.time)
 
                     else:
                         #==================================================================================#
                         # Check the SeedRestPoint start time is greater than previous appended rest point! #
                         #==================================================================================#
                         rest_point_confirmed = RestTrkPoint(
-                            seed_rest_point.get_start_time(),
-                            seed_rest_point.get_lat(),
-                            seed_rest_point.get_lon(),
-                            seed_rest_point.get_elev(),
-                            seed_rest_point.get_start_time(),
-                            i_track_point.get_point_time()
+                            seed_rest_point.start_time,
+                            seed_rest_point.lat,
+                            seed_rest_point.lon,
+                            seed_rest_point.elev,
+                            seed_rest_point.start_time,
+                            i_track_point.time
                         )
 
                         rest_point_list.append(rest_point_confirmed)

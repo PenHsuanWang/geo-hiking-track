@@ -6,7 +6,6 @@ to run the target gpx with analyzer to show the tracks
 
 import click
 from src.geoanalyzer.tracks import gps_parser
-from src.geoanalyzer.tracks import track_analyzer
 from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
 from src.visualizartion.map_drawer import FoliumMapDrawer
 
@@ -26,8 +25,8 @@ def main(gpx_file, output_map):
 
         # Generating map
         map_drawer = FoliumMapDrawer(
-            tracks.get_start_point().get_lat(),
-            tracks.get_start_point().get_lon()
+            tracks.get_start_point().lat,
+            tracks.get_start_point().lon
         )
         map_drawer.add_tracks(tracks, weight=4)
         map_drawer.draw_points_on_map(

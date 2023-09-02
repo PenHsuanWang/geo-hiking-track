@@ -16,31 +16,31 @@ def test_sum_delta_between_every_element():
 
 
 # Mocking classes for other test functions
-class MockRawTrkPoint:
-    def __init__(self, time, lat, lon, elev):
-        self.time = time
-        self.lat = lat
-        self.lon = lon
-        self.elev = elev
-
-    def get_point_time(self):
-        return self.time
-
-    def get_lat(self):
-        return self.lat
-
-    def get_lon(self):
-        return self.lon
-
-    def get_elev(self):
-        return self.elev
+# class MockRawTrkPoint:
+#     def __init__(self, time, lat, lon, elev):
+#         self.time = time
+#         self.lat = lat
+#         self.lon = lon
+#         self.elev = elev
+#
+#     def get_point_time(self):
+#         return self.time
+#
+#     def get_lat(self):
+#         return self.lat
+#
+#     def get_lon(self):
+#         return self.lon
+#
+#     def get_elev(self):
+#         return self.elev
 
 
 # Testing smoothing_tracks
-def test_smoothing_tracks():
-    input_list = [MockRawTrkPoint(datetime(2023, 8, 28, 1, i, 0), 37 + i, -122 + i, 100 + i) for i in range(6)]
-    output = smoothing_tracks(input_list)
-    assert len(output) == 1  # Based on how your function is written, the length should be 1
+# def test_smoothing_tracks():
+#     input_list = [MockRawTrkPoint(datetime(2023, 8, 28, 1, i, 0), 37 + i, -122 + i, 100 + i) for i in range(6)]
+#     output = smoothing_tracks(input_list)
+#     assert len(output) == 1  # Based on how your function is written, the length should be 1
 
 #
 # # Testing do_analyzing

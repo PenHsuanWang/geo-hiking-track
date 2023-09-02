@@ -1,5 +1,6 @@
 import folium
-from src.geoanalyzer.tracks.track_objects import RestTrkPoint
+# from src.geoanalyzer.tracks.track_objects import RestTrkPoint
+from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
 
 class FoliumMapDrawer:
 
@@ -16,7 +17,7 @@ class FoliumMapDrawer:
         main_tracks_point_list = input_tracks.get_main_tracks_points_list()
         point_list = []
         for i in main_tracks_point_list:
-            point = [i.get_lat(), i.get_lon()]
+            point = [i.lat, i.lon]
             point_list.append(point)
         self.fmap.add_child(folium.PolyLine(locations=point_list, **kwargs))
 
@@ -30,12 +31,12 @@ class FoliumMapDrawer:
             point_info+='<br>'
 
         for i in points:
-            point_location = [i.get_lat(), i.get_lon()]
+            point_location = [i.lat, i.lon]
 
             if isinstance(i, RestTrkPoint):
-                popup_info = '休息點'+'<br>'+str(i.get_start_time().strftime('%H:%M'))+' ~ '+str(i.get_end_time().strftime('%H:%M'))+'<br>'+'Elev: '+str(round(i.get_elev(), 0))+' M'
+                popup_info = '休息點'+'<br>'+str(i.get_start_time().strftime('%H:%M'))+' ~ '+str(i.get_end_time().strftime('%H:%M'))+'<br>'+'Elev: '+str(round(i.elev, 0))+' M'
             else:
-                popup_info = point_info+str(i.get_point_time().strftime('%H:%M'))+'<br>'+i.get_note()+'<br>'+str(round(i.get_elev(), 0)) +" M"
+                popup_info = point_info+str(i.time.strftime('%H:%M'))+'<br>'+i.get_note()+'<br>'+str(round(i.elev, 0)) +" M"
 
             popup = folium.Popup(
                 popup_info,

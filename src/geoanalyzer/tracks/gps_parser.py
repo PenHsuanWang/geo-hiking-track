@@ -6,8 +6,12 @@ from typing import Optional
 from xml.dom import minidom
 from xml.dom.minidom import Document, Node
 
-from src.geoanalyzer.tracks import track_objects
+# from src.geoanalyzer.tracks import track_objects
 
+
+from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
+from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
+from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
 
 def parse_gpx(input_gpx_file: str) -> minidom.Document:
     """
@@ -76,7 +80,7 @@ class GpxParser:
 
         self._infile = gpx_file
 
-        self._target_track_object = track_objects.RawTrackObject()
+        self._target_track_object = RawTrackObject()
 
         xmldoc = parse_gpx(self._infile)
 
@@ -98,7 +102,7 @@ class GpxParser:
             waypoint_note = self._gpx_extract_point_note(s)
 
             # Creating the point object
-            extract_waypoint = track_objects.WayPoint(
+            extract_waypoint = WayPoint(
                 point_parsed_datetime,
                 float(s.getAttribute("lat")),
                 float(s.getAttribute("lon")),
@@ -115,7 +119,7 @@ class GpxParser:
 
             elevation = self._gpx_extract_point_elevation(s)
 
-            extract_point = track_objects.RawTrkPoint(
+            extract_point = RawTrkPoint(
                 point_parsed_datetime,
                 float(s.getAttribute("lat")),
                 float(s.getAttribute("lon")),
@@ -123,7 +127,7 @@ class GpxParser:
             )
             self._target_track_object.add_track_point(extract_point)
 
-    def get_raw_track_object(self) -> track_objects.RawTrackObject:
+    def get_raw_track_object(self) -> RawTrackObject:
         """Return the populated RawTrackObject."""
         return self._target_track_object
 
