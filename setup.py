@@ -30,7 +30,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'gpxana=cli:main',
+            'gpxana=src.cli:main',
         ]
     }
 )

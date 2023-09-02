@@ -6,7 +6,6 @@ specific function like clustering closing point while tracker in rest
 """
 
 import math
-
 import datetime
 
 from src.geo_objects.geo_points.basic_point import BasicPoint
@@ -105,7 +104,8 @@ class RestTrkPoint(BasicPoint):
         return self._end_time
 
     def get_rest_time_spend(self):
-        return (self._end_time - self._start_time).minutes
+        # return (self._end_time - self._start_time).minutes
+        return int((self._end_time - self._start_time).total_seconds() / 60)  # Convert to minutes
 
 
 class RestTrkPointCandidate:

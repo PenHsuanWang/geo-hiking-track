@@ -9,6 +9,7 @@ class RawTracks(BasicTracks):
         Container for hold a Track, composed by the list of RowTrkPoints
         """
 
+        super().__init__()
         self._main_track_points_list = []
 
     def add_track_point(self, raw_track_point: RawTrkPoint):
@@ -18,7 +19,6 @@ class RawTracks(BasicTracks):
         else:
             print("error, have to append RawTrkPoint in this class")
             pass
-
 
 
 class RawTrackObject:

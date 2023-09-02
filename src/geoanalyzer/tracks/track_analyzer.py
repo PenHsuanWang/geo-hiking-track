@@ -97,7 +97,7 @@ def find_rest_point(input_list):
 
     Rest Point Candidate:
         First RestPointCandidate:
-            the point speed X and speed Y < 0.1 can be treat as first RestPointCandidate.
+            the point speed X and speed Y < 0.1 can be treated as first RestPointCandidate.
         Second RestPointCandidate:
             the second RestPointCandidate's speed X and speed Y should < 0.1 also => two continuous point with low speed
         Following Point:
