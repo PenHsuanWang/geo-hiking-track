@@ -9,6 +9,7 @@ from src.geoanalyzer.tracks import gps_parser
 from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
 from src.visualizartion.map_drawer import FoliumMapDrawer
 
+
 @click.command()
 @click.option('--gpx-file', type=click.Path(exists=True), required=True, help='Path to the GPX file to load.')
 @click.option('--output-map', type=click.Path(), required=True, help='Directory to save the output map.')
@@ -52,6 +53,6 @@ def main(gpx_file, output_map):
     except Exception as e:
         click.echo(f"An error occurred: {str(e)}", err=True)
 
+
 if __name__ == '__main__':
     main()
-

@@ -39,9 +39,9 @@ class AnalyzedTrackObject(RawTrackObject):
 
         self._waypoint_list = []
 
-        #===================================================#
-        # Attributes of track, which get from advance calc. #
-        #===================================================#
+        # =================================================== #
+        # Attributes of track, which get from advance calc.   #
+        # =================================================== #
 
         # List of Rest Point
         self._rest_point_list = []
@@ -58,10 +58,9 @@ class AnalyzedTrackObject(RawTrackObject):
     def add_track_point(self, new_point):
         self._main_tracks.add_track_point(new_point)
 
-
-    #=====================#
-    # Set function series #
-    #=====================#
+    # ===================== #
+    # Set function series   #
+    # ===================== #
     def set_rest_point_list(self, input_list):
         self._rest_point_list = input_list
 
@@ -74,9 +73,9 @@ class AnalyzedTrackObject(RawTrackObject):
     def set_great_turn_vector_list(self, input_list):
         self._great_turn_vector_list = input_list
 
-    #=====================#
-    # Get function series #
-    #=====================#
+    # ===================== #
+    # Get function series   #
+    # ===================== #
 
     def get_rest_point_list(self):
         return self._rest_point_list
@@ -92,4 +91,3 @@ class AnalyzedTrackObject(RawTrackObject):
 
     def get_total_integral_distance(self):
         return [i.get_point_integral_dst for i in self._main_tracks]
-

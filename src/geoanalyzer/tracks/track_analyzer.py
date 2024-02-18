@@ -141,32 +141,32 @@ def find_rest_point(input_list):
 
         if i_track_point.get_speed_xy() < 0.1:
 
-            #=======================#
-            # If SeedPoint is found #
-            #=======================#
+            # ======================= #
+            # If SeedPoint is found   #
+            # ======================= #
             if found_seed:
                 continue
 
-            #==============================#
-            # SeedPoint is not yet found ! #
-            #==============================#
+            # ============================== #
+            # SeedPoint is not yet found !   #
+            # ============================== #
             if rest_point_candidate is None:
                 rest_point_candidate = RestTrkPointCandidate(i_track_point)
 
             elif isinstance(rest_point_candidate, RestTrkPointCandidate):
 
                 if rest_point_candidate.get_tot_delta_x() > 20 or rest_point_candidate.get_tot_delta_y() > 20:
-                    #===========================================#
-                    # False condition, purge RestPointCandidate #
-                    #===========================================#
+                    # =========================================== #
+                    # False condition, purge RestPointCandidate   #
+                    # =========================================== #
                     del rest_point_candidate
                     rest_point_candidate = None  # rest rest_point_candidate
                     continue
 
                 if rest_point_candidate.calculate_time_spend(i_track_point) > 60:
-                    #====================================================#
-                    # True condition, go to flush this candidate as seed #
-                    #====================================================#
+                    # ==================================================== #
+                    # True condition, go to flush this candidate as seed   #
+                    # ==================================================== #
                     if not found_seed:
                         found_seed = True
                         seed_rest_point = rest_point_candidate.flush_to_rest_seed()
@@ -177,16 +177,15 @@ def find_rest_point(input_list):
                         raise Exception
 
                 elif rest_point_candidate.calculate_time_spend(i_track_point) <= 60:
-                    #==============================#
-                    # Add new rest point candidate #
-                    #==============================#
+                    # ============================== #
+                    # Add new rest point candidate   #
+                    # ============================== #
                     rest_point_candidate.add_candidate(i_track_point)
                     continue
 
                 else:
                     print("Peculiar case happen, which I did not considered")
                     raise Exception
-
 
         elif i_track_point.get_speed_xy() >= 0.1:
 
@@ -205,17 +204,17 @@ def find_rest_point(input_list):
                     # flush and delete all collecting object
 
                     if len(rest_point_list) > 0 and (seed_rest_point.start_time - rest_point_list[-1].get_end_time()).seconds < 120:
-                        #============================================================================================#
-                        # If the seed rest point's start time is too close to previous rest point's end time         #
-                        # The new seeding point maybe the same rest point, Do not append this seed as new rest point #
-                        # Update the last rest point in list's setting the end time to current point time            #
-                        #============================================================================================#
+                        # ============================================================================================ #
+                        # If the seed rest point's start time is too close to previous rest point's end time           #
+                        # The new seeding point maybe the same rest point, Do not append this seed as new rest point   #
+                        # Update the last rest point in list's setting the end time to current point time              #
+                        # ============================================================================================ #
                         rest_point_list[-1].update_end_time(i_track_point.time)
 
                     else:
-                        #==================================================================================#
-                        # Check the SeedRestPoint start time is greater than previous appended rest point! #
-                        #==================================================================================#
+                        # ================================================================================== #
+                        # Check the SeedRestPoint start time is greater than previous appended rest point!   #
+                        # ================================================================================== #
                         rest_point_confirmed = RestTrkPoint(
                             seed_rest_point.start_time,
                             seed_rest_point.lat,
@@ -227,9 +226,9 @@ def find_rest_point(input_list):
 
                         rest_point_list.append(rest_point_confirmed)
 
-                    #=======================#
-                    # Reset rest point seed #
-                    #=======================#
+                    # ======================= #
+                    # Reset rest point seed   #
+                    # ======================= #
                     del seed_rest_point
                     seed_rest_point = None
                     found_seed = False
@@ -275,4 +274,3 @@ class TrackAnalyzer:
 
     def get_rest_point_list(self):
         return self._analyzed_tracks_object.get_rest_point_list()
-

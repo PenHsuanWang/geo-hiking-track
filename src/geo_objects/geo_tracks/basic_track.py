@@ -37,4 +37,3 @@ class BasicTracks:
 
     def get_main_tracks_points_list(self):
         return self._main_track_points_list
-

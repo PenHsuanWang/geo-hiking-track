@@ -59,4 +59,3 @@ class BasicPoint:
     #
     # def is_empty(self):
     #     return self._is_empty
-

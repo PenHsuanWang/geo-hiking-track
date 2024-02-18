@@ -4,14 +4,15 @@ import os
 from typing import Optional
 
 from xml.dom import minidom
-from xml.dom.minidom import Document, Node
+from xml.dom.minidom import Node
 
 # from src.geoanalyzer.tracks import track_objects
 
 
 from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
 from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
-from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
+# from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
+
 
 def parse_gpx(input_gpx_file: str) -> minidom.Document:
     """
@@ -37,7 +38,7 @@ def extract_waypoint_from_xmldoc(xmldoc: minidom.Document, tag_name='wpt') -> [m
     return xmldoc.getElementsByTagName(tag_name)
 
 
-def extract_track_point_from_xmldoc(xmldoc: minidom.Document, tag_name: str ='trkpt') -> [minidom.Node]:
+def extract_track_point_from_xmldoc(xmldoc: minidom.Document, tag_name: str = 'trkpt') -> [minidom.Node]:
     """
     Extract track points from the XML structure of a GPX file.
 
