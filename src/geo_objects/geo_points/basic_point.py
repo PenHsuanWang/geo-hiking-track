@@ -2,7 +2,7 @@ class BasicPoint:
     """
     Basic point object provide a template for all other types of geography gps point to save point
     """
-    def __init__(self, time: str, lat: float, lon: float, elev: float):
+    def __init__(self, time, lat: float, lon: float, elev: float):
         """
         Initializes a BasicPoint object, provide the basic information of a point
         input the gps track point's time, latitude, longitude, elevation

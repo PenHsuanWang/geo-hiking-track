@@ -1,11 +1,11 @@
 import datetime
 import os
-
+import logging
 from typing import Optional
 
 from xml.dom import minidom
 from xml.dom.minidom import Node
-
+from xml.dom.minidom import Element
 # from src.geoanalyzer.tracks import track_objects
 
 
@@ -134,35 +134,57 @@ class GpxParser:
 
     @staticmethod
     def _gpx_extract_point_time_str_utc(s: Node) -> Optional[str]:
-        """Extract the time string from a GPX point. Returns None if not found."""
-        try:
-            time_tag = s.getElementsByTagName("time")[0].firstChild.data
-            return time_tag
+        """
+        Extracts the time string from a GPX point element.
 
-        except IndexError:
-            print("Error of get time from GPX, time tag not found!")
-            return None
+        This method attempts to find and return the time string from a provided GPX point.
+        It logs an error if the provided node is not an Element or if the time tag is missing.
+        """
+        if isinstance(s, Element):
+            try:
+                time_tag = s.getElementsByTagName("time")[0].firstChild.data
+                return time_tag
+            except IndexError:
+                logging.error("Time tag not found in GPX point.")
+        else:
+            logging.error("Provided node is not an Element.")
+        return None
 
     @staticmethod
     def _gpx_extract_point_elevation(s: Node) -> Optional[float]:
-        """Extract the elevation from a GPX point. Returns None if not found."""
-        try:
-            elevation = s.getElementsByTagName("ele")[0].firstChild.data
-            elevation = float(elevation)
-            return elevation
-        except IndexError:
-            print("Error of get elevation from GPX, ele tag not found!")
-            return None
-        except ValueError:
-            print("Elevation value is not a valid float")
-            return None
+        """
+        Extracts the elevation float value from a GPX point element.
+
+        Attempts to extract and return the elevation value from a provided GPX point.
+        Logs errors if the node is not an Element, the elevation tag is missing, or
+        if the elevation value is not a valid float.
+        """
+        if isinstance(s, Element):
+            try:
+                elevation = s.getElementsByTagName("ele")[0].firstChild.data
+                return float(elevation)
+            except IndexError:
+                logging.error("Elevation tag not found in GPX point.")
+            except ValueError:
+                logging.error("Elevation value is not a valid float.")
+        else:
+            logging.error("Provided node is not an Element.")
+        return None
 
     @staticmethod
     def _gpx_extract_point_note(s: Node) -> Optional[str]:
-        """Extract the note from a GPX point. Returns None if not found."""
-        try:
-            note = s.getElementsByTagName("name")[0].firstChild.data
-            return note
-        except IndexError:
-            print("Error of get Note from GPX, name tag not found!")
-            return None
+        """
+        Extracts the note string from a GPX point element.
+
+        This method looks for and returns the note (name tag) from a provided GPX point.
+        It logs an error if the node is not an Element or if the note tag is absent.
+        """
+        if isinstance(s, Element):
+            try:
+                note = s.getElementsByTagName("name")[0].firstChild.data
+                return note
+            except IndexError:
+                logging.error("Note tag not found in GPX point.")
+        else:
+            logging.error("Provided node is not an Element.")
+        return None
