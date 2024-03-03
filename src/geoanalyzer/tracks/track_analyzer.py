@@ -253,6 +253,8 @@ def find_rest_point(input_list):
 class TrackAnalyzer:
 
     def __init__(self, input_raw_track_object):
+        if not input_raw_track_object.get_main_tracks().get_main_tracks_points_list():
+            raise ValueError("Input track object is empty.")
 
         input_raw_track_point_list = input_raw_track_object.get_main_tracks().get_main_tracks_points_list()
         smooth_track_list = smoothing_tracks(input_raw_track_point_list)
