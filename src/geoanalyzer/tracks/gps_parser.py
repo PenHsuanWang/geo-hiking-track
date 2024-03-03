@@ -146,21 +146,21 @@ class GpxParser:
         This method attempts to find and return the time string from a provided GPX point.
         It logs an error if the provided node is not an Element or if the time tag is missing.
         """
-        if isinstance(s, Element):
-            try:
-                time_elements = s.getElementsByTagName("time")
-                if time_elements:
-                    time_node = time_elements[0].firstChild
-                    time_tag = time_node.data if isinstance(time_node, Text) else None
-                else:
-                    logging.error("Time tag not found in GPX point.")
-                    return None
-                return time_tag
-            except IndexError:
-                logging.error("Time tag not found in GPX point.")
-        else:
+        if not isinstance(s, Element):
             logging.error("Provided node is not an Element.")
-        return None
+            return None
+
+        time_elements = s.getElementsByTagName("time")
+        if not time_elements:
+            logging.error("Time tag not found in GPX point.")
+            return None
+
+        time_node = time_elements[0].firstChild
+        if not time_node or not isinstance(time_node, Text):
+            logging.error("Time element's first child is not text.")
+            return None
+
+        return time_node.data
 
     @staticmethod
     def _gpx_extract_point_elevation(s: Node) -> Optional[float]:
@@ -171,22 +171,25 @@ class GpxParser:
         Logs errors if the node is not an Element, the elevation tag is missing, or
         if the elevation value is not a valid float.
         """
-        if isinstance(s, Element):
-            elevation_elements = s.getElementsByTagName("ele")
-            if elevation_elements:
-                elevation_node = elevation_elements[0].firstChild
-                if isinstance(elevation_node, Text):  # Ensuring it's a Text node
-                    try:
-                        return float(elevation_node.data)
-                    except ValueError:
-                        logging.error("Elevation value is not a valid float.")
-                else:
-                    logging.error("Elevation element's first child is not text.")
-            else:
-                logging.error("Elevation tag not found in GPX point.")
-        else:
+        if not isinstance(s, Element):
             logging.error("Provided node is not an Element.")
-        return None
+            return None
+
+        elevation_elements = s.getElementsByTagName("ele")
+        if not elevation_elements:
+            logging.error("Elevation tag not found in GPX point.")
+            return None
+
+        elevation_node = elevation_elements[0].firstChild
+        if not elevation_node or not isinstance(elevation_node, Text):
+            logging.error("Elevation element's first child is not text.")
+            return None
+
+        try:
+            return float(elevation_node.data)
+        except ValueError:
+            logging.error("Elevation value is not a valid float.")
+            return None
 
     @staticmethod
     def _gpx_extract_point_note(s: Node) -> Optional[str]:
@@ -196,16 +199,19 @@ class GpxParser:
         This method looks for and returns the note (name tag) from a provided GPX point.
         It logs an error if the node is not an Element or if the note tag is absent.
         """
-        if isinstance(s, Element):
-            note_elements = s.getElementsByTagName("name")
-            if note_elements:
-                note_node = note_elements[0].firstChild
-                if isinstance(note_node, Text):  # Check for Text node
-                    return note_node.data
-                else:
-                    logging.error("Note element's first child is not text.")
-            else:
-                logging.error("Note tag not found in GPX point.")
-        else:
+        if not isinstance(s, Element):
             logging.error("Provided node is not an Element.")
-        return None
+            return None
+
+        note_elements = s.getElementsByTagName("name")
+        if not note_elements:
+            logging.error("Note tag not found in GPX point.")
+            return None
+
+        note_node = note_elements[0].firstChild
+        if not isinstance(note_node, Text):
+            logging.error("Note element's first child is not text.")
+            return None
+
+        return note_node.data
+
