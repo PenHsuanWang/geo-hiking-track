@@ -1,10 +1,13 @@
 import pytest
 import datetime
 from unittest.mock import Mock, patch
+from unittest.mock import MagicMock
 from src.geoanalyzer.tracks.gps_parser import parse_gpx, extract_waypoint_from_xmldoc, extract_track_point_from_xmldoc, parse_time, GpxParser
 
 from src.geoanalyzer.tracks.gps_parser import GpxParser
-from xml.dom.minidom import Document
+from xml.dom.minidom import Document, Node
+
+
 
 def create_mock_node_with_child(parent_name, child_name, child_value):
     doc = Document()
@@ -16,17 +19,43 @@ def create_mock_node_with_child(parent_name, child_name, child_value):
     return parent_node
 
 
-# Testing extract_waypoint_from_xmldoc function
+# Helper function to create a mock Element with specified attributes
+def create_mock_element(tag_name: str, attributes: dict = None, text_content: str = None) -> MagicMock:
+    element = MagicMock(spec=Node)  # Use Node as a broader spec if necessary
+    element.tagName = tag_name
+
+    # Ensure attributes is always a dictionary
+    attributes = attributes or {}
+
+    for attr, value in attributes.items():
+        setattr(element, attr, MagicMock(return_value=value))
+
+    # Set getAttribute to mock the behavior of the get method on the attributes dictionary
+    element.getAttribute = MagicMock(side_effect=attributes.get)
+
+    if text_content is not None:
+        text_node = MagicMock()
+        text_node.data = text_content
+        element.firstChild = text_node
+    else:
+        element.firstChild = None
+
+    return element
+
+# Adjusted test cases
 def test_extract_waypoint_from_xmldoc():
     mock_xmldoc = Mock()
-    mock_xmldoc.getElementsByTagName.return_value = 'test_waypoint'
-    assert extract_waypoint_from_xmldoc(mock_xmldoc) == 'test_waypoint'
+    mock_waypoint = create_mock_element("wpt", text_content="test_waypoint")
+    mock_xmldoc.getElementsByTagName.return_value = [mock_waypoint]  # Return a list of mock Elements
+    result = extract_waypoint_from_xmldoc(mock_xmldoc, "wpt")
+    assert result == [mock_waypoint]
 
-# Testing extract_track_point_from_xmldoc function
 def test_extract_track_point_from_xmldoc():
     mock_xmldoc = Mock()
-    mock_xmldoc.getElementsByTagName.return_value = 'test_track_point'
-    assert extract_track_point_from_xmldoc(mock_xmldoc) == 'test_track_point'
+    mock_track_point = create_mock_element("trkpt", text_content="test_track_point")
+    mock_xmldoc.getElementsByTagName.return_value = [mock_track_point]  # Return a list of mock Elements
+    result = extract_track_point_from_xmldoc(mock_xmldoc, "trkpt")
+    assert result == [mock_track_point]
 
 # Testing parse_time function
 def test_parse_time():

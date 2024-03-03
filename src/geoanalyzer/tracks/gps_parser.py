@@ -1,11 +1,10 @@
 import datetime
 import os
 import logging
-from typing import Optional
+from typing import Optional, List
 
 from xml.dom import minidom
-from xml.dom.minidom import Node
-from xml.dom.minidom import Element
+from xml.dom.minidom import Node, Element, Text
 # from src.geoanalyzer.tracks import track_objects
 
 
@@ -27,7 +26,7 @@ def parse_gpx(input_gpx_file: str) -> minidom.Document:
     return xmldoc
 
 
-def extract_waypoint_from_xmldoc(xmldoc: minidom.Document, tag_name='wpt') -> [minidom.Node]:
+def extract_waypoint_from_xmldoc(xmldoc: minidom.Document, tag_name='wpt') -> List[minidom.Node]:
     """
     Extract waypoints from the XML structure of a GPX file.
 
@@ -35,10 +34,10 @@ def extract_waypoint_from_xmldoc(xmldoc: minidom.Document, tag_name='wpt') -> [m
     :param tag_name: The tag name of waypoints. Default is 'wpt'.
     :return: A list of waypoints.
     """
-    return xmldoc.getElementsByTagName(tag_name)
+    return list(xmldoc.getElementsByTagName(tag_name))
 
 
-def extract_track_point_from_xmldoc(xmldoc: minidom.Document, tag_name: str = 'trkpt') -> [minidom.Node]:
+def extract_track_point_from_xmldoc(xmldoc: minidom.Document, tag_name: str = 'trkpt') -> List[minidom.Node]:
     """
     Extract track points from the XML structure of a GPX file.
 
@@ -46,7 +45,7 @@ def extract_track_point_from_xmldoc(xmldoc: minidom.Document, tag_name: str = 't
     :param tag_name: The tag name of track points. Default is 'trkpt'.
     :return: A list of track points.
     """
-    return xmldoc.getElementsByTagName(tag_name)
+    return list(xmldoc.getElementsByTagName(tag_name))
 
 
 def parse_time(input_time: str) -> datetime.datetime:
@@ -91,15 +90,18 @@ class GpxParser:
         self.processing_waypoint_list(self._extract_waypoint)
         self.processing_track_point_list(self._extract_track_point)
 
-    def processing_waypoint_list(self, input_list_: [minidom.Node]) -> None:
+    def processing_waypoint_list(self, input_list_: List[minidom.Node]) -> None:
         """Processing the list of waypoints and adding them to the track object."""
 
         for s in input_list_:
+
+            if not isinstance(s, Element):
+                logging.error("Node is not an Element.")
+                continue
+
             point_time_str_utc = self._gpx_extract_point_time_str_utc(s)
-            point_parsed_datetime = parse_time(point_time_str_utc)
-
+            point_parsed_datetime = None if point_time_str_utc is None else parse_time(point_time_str_utc)
             elevation = self._gpx_extract_point_elevation(s)
-
             waypoint_note = self._gpx_extract_point_note(s)
 
             # Creating the point object
@@ -112,12 +114,16 @@ class GpxParser:
             )
             self._target_track_object.add_way_point(extract_waypoint)
 
-    def processing_track_point_list(self, input_list_: [minidom.Node]) -> None:
+    def processing_track_point_list(self, input_list_: List[minidom.Node]) -> None:
         """Processing the list of track points and adding them to the track object."""
         for s in input_list_:
-            point_time_str_utc = self._gpx_extract_point_time_str_utc(s)
-            point_parsed_datetime = parse_time(point_time_str_utc)
 
+            if not isinstance(s, Element):
+                logging.error("Node is not an Element.")
+                continue
+
+            point_time_str_utc = self._gpx_extract_point_time_str_utc(s)
+            point_parsed_datetime = None if point_time_str_utc is None else parse_time(point_time_str_utc)
             elevation = self._gpx_extract_point_elevation(s)
 
             extract_point = RawTrkPoint(
@@ -142,7 +148,13 @@ class GpxParser:
         """
         if isinstance(s, Element):
             try:
-                time_tag = s.getElementsByTagName("time")[0].firstChild.data
+                time_elements = s.getElementsByTagName("time")
+                if time_elements:
+                    time_node = time_elements[0].firstChild
+                    time_tag = time_node.data if isinstance(time_node, Text) else None
+                else:
+                    logging.error("Time tag not found in GPX point.")
+                    return None
                 return time_tag
             except IndexError:
                 logging.error("Time tag not found in GPX point.")
@@ -160,13 +172,18 @@ class GpxParser:
         if the elevation value is not a valid float.
         """
         if isinstance(s, Element):
-            try:
-                elevation = s.getElementsByTagName("ele")[0].firstChild.data
-                return float(elevation)
-            except IndexError:
+            elevation_elements = s.getElementsByTagName("ele")
+            if elevation_elements:
+                elevation_node = elevation_elements[0].firstChild
+                if isinstance(elevation_node, Text):  # Ensuring it's a Text node
+                    try:
+                        return float(elevation_node.data)
+                    except ValueError:
+                        logging.error("Elevation value is not a valid float.")
+                else:
+                    logging.error("Elevation element's first child is not text.")
+            else:
                 logging.error("Elevation tag not found in GPX point.")
-            except ValueError:
-                logging.error("Elevation value is not a valid float.")
         else:
             logging.error("Provided node is not an Element.")
         return None
@@ -180,10 +197,14 @@ class GpxParser:
         It logs an error if the node is not an Element or if the note tag is absent.
         """
         if isinstance(s, Element):
-            try:
-                note = s.getElementsByTagName("name")[0].firstChild.data
-                return note
-            except IndexError:
+            note_elements = s.getElementsByTagName("name")
+            if note_elements:
+                note_node = note_elements[0].firstChild
+                if isinstance(note_node, Text):  # Check for Text node
+                    return note_node.data
+                else:
+                    logging.error("Note element's first child is not text.")
+            else:
                 logging.error("Note tag not found in GPX point.")
         else:
             logging.error("Provided node is not an Element.")
