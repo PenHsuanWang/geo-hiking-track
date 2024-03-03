@@ -15,11 +15,6 @@ def create_mock_node_with_child(parent_name, child_name, child_value):
     parent_node.appendChild(child_node)
     return parent_node
 
-# Testing parse_gpx function
-# def test_parse_gpx():
-#     with patch('xml.dom.minidom.parse') as mock_parse:
-#         parse_gpx('test.gpx')
-#         mock_parse.assert_called_once_with('test.gpx')
 
 # Testing extract_waypoint_from_xmldoc function
 def test_extract_waypoint_from_xmldoc():
@@ -91,3 +86,55 @@ def test_GpxParser_init():
         # Add your assertions here
         assert gpx_parser._extract_waypoint == [mock_waypoint]
         assert gpx_parser._extract_track_point == [mock_track_point]
+
+
+# Helper function to create a GPX node with optional children
+def create_gpx_node(tag_name: str, attributes=None, children=None):
+    doc = Document()
+    node = doc.createElement(tag_name)
+    if attributes:
+        for key, value in attributes.items():
+            node.setAttribute(key, value)
+    if children:
+        for child_tag, child_value in children.items():
+            child_node = doc.createElement(child_tag)
+            child_node.appendChild(doc.createTextNode(child_value))
+            node.appendChild(child_node)
+    return node
+
+# Test cases for _gpx_extract_point_time_str_utc
+@pytest.mark.parametrize("time_str,expected", [
+    ("2023-01-01T12:00:00Z", "2023-01-01T12:00:00Z"),  # Valid time string
+    (None, None),  # No time tag
+    ("", None),  # Empty time string
+    ("not-a-time", "not-a-time")  # Malformed time string returns as is
+])
+def test_gpx_extract_point_time_str_utc(time_str, expected):
+    node = create_gpx_node("trkpt", children={"time": time_str} if time_str else {})
+    result = GpxParser._gpx_extract_point_time_str_utc(node)
+    assert result == expected, f"The extracted time string should match the expected result: {expected}"
+
+
+# Test cases for _gpx_extract_point_elevation
+@pytest.mark.parametrize("elevation_str,expected", [
+    ("100.0", 100.0),  # Valid elevation
+    (None, None),  # No elevation tag
+    ("", None),  # Empty elevation string
+    ("not-a-number", None)  # Non-numeric elevation string
+])
+def test_gpx_extract_point_elevation(elevation_str, expected):
+    node = create_gpx_node("trkpt", children={"ele": elevation_str} if elevation_str else {})
+    result = GpxParser._gpx_extract_point_elevation(node)
+    assert result == expected, "The extracted elevation should match the expected result."
+
+# Test cases for _gpx_extract_point_note
+@pytest.mark.parametrize("note,expected", [
+    ("This is a note", "This is a note"),  # Valid note
+    (None, None),  # No note tag
+    ("", None)  # Empty note string
+])
+def test_gpx_extract_point_note(note, expected):
+    node = create_gpx_node("trkpt", children={"name": note} if note else {})
+    result = GpxParser._gpx_extract_point_note(node)
+    assert result == expected, "The extracted note should match the expected result."
+

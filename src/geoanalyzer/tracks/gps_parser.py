@@ -139,7 +139,7 @@ class GpxParser:
             time_tag = s.getElementsByTagName("time")[0].firstChild.data
             return time_tag
 
-        except:
+        except IndexError:
             print("Error of get time from GPX, time tag not found!")
             return None
 
@@ -150,8 +150,11 @@ class GpxParser:
             elevation = s.getElementsByTagName("ele")[0].firstChild.data
             elevation = float(elevation)
             return elevation
-        except:
+        except IndexError:
             print("Error of get elevation from GPX, ele tag not found!")
+            return None
+        except ValueError:
+            print("Elevation value is not a valid float")
             return None
 
     @staticmethod
@@ -160,6 +163,6 @@ class GpxParser:
         try:
             note = s.getElementsByTagName("name")[0].firstChild.data
             return note
-        except:
+        except IndexError:
             print("Error of get Note from GPX, name tag not found!")
             return None
