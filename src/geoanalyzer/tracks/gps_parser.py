@@ -15,10 +15,17 @@ from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
 
 def parse_gpx(input_gpx_file: str) -> minidom.Document:
     """
-    Parse a GPX file into an XML document object.
+    Parse a GPX file and return its XML document representation.
 
-    :param input_gpx_file: The path to the GPX file to be parsed.
-    :return: The parsed XML document object.
+    Reads a GPX file from the given file path, parses it into an XML document using the
+    `minidom` parser, and returns the document object for further processing. Raises a
+    FileNotFoundError if the specified GPX file does not exist.
+
+    :param input_gpx_file: The file path to the GPX file to be parsed.
+    :type input_gpx_file: str
+    :return: The parsed XML document object of the GPX file.
+    :rtype: minidom.Document
+    :raises FileNotFoundError: If the specified GPX file does not exist.
     """
     if not os.path.exists(input_gpx_file):
         raise FileNotFoundError("GPX file not found")
@@ -28,32 +35,47 @@ def parse_gpx(input_gpx_file: str) -> minidom.Document:
 
 def extract_waypoint_from_xmldoc(xmldoc: minidom.Document, tag_name='wpt') -> List[minidom.Node]:
     """
-    Extract waypoints from the XML structure of a GPX file.
+    Extracts all waypoints from the given GPX XML document.
+
+    Finds all XML nodes corresponding to waypoints in the GPX document,
+    based on the specified tag name, and returns them as a list. By default,
+    it looks for 'wpt' tags, which represent waypoints in GPX files.
 
     :param xmldoc: The XML structure of the GPX file.
     :param tag_name: The tag name of waypoints. Default is 'wpt'.
+    :type tag_name: str
     :return: A list of waypoints.
+    :rtype: List[minidom.Node]
     """
     return list(xmldoc.getElementsByTagName(tag_name))
 
 
 def extract_track_point_from_xmldoc(xmldoc: minidom.Document, tag_name: str = 'trkpt') -> List[minidom.Node]:
     """
-    Extract track points from the XML structure of a GPX file.
+    Extracts track points from the XML structure of a GPX file.
 
     :param xmldoc: The XML structure of the GPX file.
     :param tag_name: The tag name of track points. Default is 'trkpt'.
+    :type tag_name: str
     :return: A list of track points.
+    :rtype: List[minidom.Node]
     """
     return list(xmldoc.getElementsByTagName(tag_name))
 
 
 def parse_time(input_time: str) -> datetime.datetime:
     """
-    Parse a time string into a datetime object.
+    Parses a time string from a GPX file into a datetime object.
+
+    Converts a time string in the format "%Y-%m-%dT%H:%M:%SZ" from the GPX file to
+    a datetime object, adjusting for the timezone if necessary. The implementation
+    should be adapted to handle timezone information more dynamically.
 
     :param input_time: The input time string in "%Y-%m-%dT%H:%M:%SZ" format.
+    :type input_time: str
     :return: The parsed datetime object.
+    :rtype: datetime.datetime
+    :raises ValueError: If there is an error parsing the datetime.
     """
     try:
         parse_date_and_time = datetime.datetime.strptime(
@@ -67,13 +89,18 @@ def parse_time(input_time: str) -> datetime.datetime:
 
 
 class GpxParser:
-    """GpxParser for extraction of row GPX file
+    """
+    Parser class for extracting data from GPX files.
 
-    Extracting GPX by looping xml structure of GPX file
-    Getting information from GPX and saving into defined model (class:TrackObject)
+    Takes a path to a GPX file, parses it, and extracts geographical data, including waypoints and
+    track points. The extracted data is used to populate a RawTrackObject with instances of WayPoint
+    and RawTrkPoint, which can then be further processed or analyzed.
 
-    Author: {Pen Hsuan Wang}
+    :ivar _infile: Path to the input GPX file.
+    :ivar _target_track_object: Container for the extracted waypoints and track points.
 
+    :param gpx_file: The file path to the GPX file to be processed.
+    :type gpx_file: str
     """
 
     def __init__(self, gpx_file):
@@ -91,10 +118,13 @@ class GpxParser:
         self.processing_track_point_list(self._extract_track_point)
 
     def processing_waypoint_list(self, input_list_: List[minidom.Node]) -> None:
-        """Processing the list of waypoints and adding them to the track object."""
+        """
+        Processes a list of waypoint nodes and adds them to the track object.
 
+        :param input_list_: List of waypoint nodes to be processed.
+        :type input_list_: List[minidom.Node]
+        """
         for s in input_list_:
-
             if not isinstance(s, Element):
                 logging.error("Node is not an Element.")
                 continue
@@ -115,7 +145,12 @@ class GpxParser:
             self._target_track_object.add_way_point(extract_waypoint)
 
     def processing_track_point_list(self, input_list_: List[minidom.Node]) -> None:
-        """Processing the list of track points and adding them to the track object."""
+        """
+        Processes a list of track point nodes and adds them to the track object.
+
+        :param input_list_: List of track point nodes to be processed.
+        :type input_list_: List[minidom.Node]
+        """
         for s in input_list_:
 
             if not isinstance(s, Element):
@@ -135,16 +170,23 @@ class GpxParser:
             self._target_track_object.add_track_point(extract_point)
 
     def get_raw_track_object(self) -> RawTrackObject:
-        """Return the populated RawTrackObject."""
+        """
+        Returns the populated RawTrackObject with GPX data.
+
+        :return: The populated RawTrackObject.
+        :rtype: RawTrackObject
+        """
         return self._target_track_object
 
     @staticmethod
     def _gpx_extract_point_time_str_utc(s: Node) -> Optional[str]:
         """
-        Extracts the time string from a GPX point element.
+        Extracts the time string from a GPX point element and returns it.
 
-        This method attempts to find and return the time string from a provided GPX point.
-        It logs an error if the provided node is not an Element or if the time tag is missing.
+        :param s: GPX point element from which to extract the time string.
+        :type s: Node
+        :return: The extracted time string, or None if not found.
+        :rtype: Optional[str]
         """
         if not isinstance(s, Element):
             logging.error("Provided node is not an Element.")
@@ -165,11 +207,12 @@ class GpxParser:
     @staticmethod
     def _gpx_extract_point_elevation(s: Node) -> Optional[float]:
         """
-        Extracts the elevation float value from a GPX point element.
+        Extracts and returns the elevation float value from a GPX point element.
 
-        Attempts to extract and return the elevation value from a provided GPX point.
-        Logs errors if the node is not an Element, the elevation tag is missing, or
-        if the elevation value is not a valid float.
+        :param s: GPX point element from which to extract the elevation.
+        :type s: Node
+        :return: The elevation value, or None if not found or invalid.
+        :rtype: Optional[float]
         """
         if not isinstance(s, Element):
             logging.error("Provided node is not an Element.")
@@ -194,10 +237,12 @@ class GpxParser:
     @staticmethod
     def _gpx_extract_point_note(s: Node) -> Optional[str]:
         """
-        Extracts the note string from a GPX point element.
+        Extracts and returns the note string from a GPX point element.
 
-        This method looks for and returns the note (name tag) from a provided GPX point.
-        It logs an error if the node is not an Element or if the note tag is absent.
+        :param s: GPX point element from which to extract the note.
+        :type s: Node
+        :return: The note string, or None if not found.
+        :rtype: Optional[str]
         """
         if not isinstance(s, Element):
             logging.error("Provided node is not an Element.")
