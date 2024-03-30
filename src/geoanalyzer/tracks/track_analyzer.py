@@ -1,13 +1,42 @@
 import datetime
 import math
+from typing import List, Union
 # from src.geoanalyzer.tracks.track_objects import RawTrkPoint, RawTracks, AnalyzedTrkPoint, AnalyzedTrackObject, TrackPointVector, RestTrkPoint, RestTrkPointCandidate, SeedRestPoint
 from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
 from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate
 from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
 
 
-def sum_delta_between_every_element(input_list):
-    tot_delta = 0
+def sum_delta_between_every_element(input_list: List[Union[float, datetime.timedelta]]) -> float:
+    """
+    Calculate the total of differences between successive elements in a list of values. This function
+    supports lists of either numerical values (float) for spatial attributes or `datetime.timedelta`
+    objects for temporal attributes of GPS track points. The list should be homogeneous, containing
+    elements of only one of the specified types.
+
+    Args:
+        input_list (List[Union[float, datetime.timedelta]]): A list of attribute values extracted
+        from track points. The list must be homogeneous.
+
+    Returns:
+        float: The total of differences between successive elements in the list. For temporal attributes,
+        the difference is returned in seconds.
+
+    Raises:
+        ValueError: If the input list contains fewer than two elements or is not homogeneous.
+        TypeError: If the list contains elements other than float or datetime.timedelta.
+    """
+    if len(input_list) < 2:
+        raise ValueError("Input list must contain at least two elements to calculate differences.")
+
+    # Determine the type of the first element, which we'll use to check list homogeneity
+    first_element_type = type(input_list[0])
+
+    if not all(isinstance(item, first_element_type) for item in input_list):
+        raise ValueError("Input list must be homogeneous.")
+
+    tot_delta = 0.0
+
     for i in range(len(input_list) - 1):
 
         delta_element = input_list[i + 1] - input_list[i]
@@ -15,23 +44,37 @@ def sum_delta_between_every_element(input_list):
         if isinstance(delta_element, (float, int)):
             tot_delta += delta_element
         elif isinstance(delta_element, datetime.timedelta):
-            tot_delta += delta_element.seconds
+            tot_delta += delta_element.total_seconds()
         else:
-            raise TypeError
-
+            raise TypeError("Element type not supported.")
     return tot_delta
 
 
-def smoothing_tracks(input_track_point_list) -> list:
-    def average(input_list):
+
+def smoothing_tracks(input_track_point_list: List[RawTrkPoint]) -> List[RawTrkPoint]:
+    """
+    Smooths the GPS track data by averaging the latitude, longitude, and elevation values over a sliding window of track points.
+
+    :param input_track_point_list: A list of RawTrkPoint objects representing the GPS track points.
+    :type input_track_point_list: List[RawTrkPoint]
+    :return: A list of RawTrkPoint objects representing the smoothed GPS track points.
+    :rtype: List[RawTrkPoint]
+    """
+    def average(input_list: List[float]) -> float:
+        """
+        Calculates the average of a list of numbers.
+
+        :param input_list: A list of numbers.
+        :type input_list: List[float]
+        :return: The average of the input list.
+        :rtype: float
+        """
         return sum(input_list) / len(input_list)
 
-    raw_track_point_list = input_track_point_list
-    averaged_tracks_list = []
+    averaged_tracks_list: List[RawTrkPoint] = []
 
-    for i in range(len(raw_track_point_list) - 5):
-        track_point_list_segment = raw_track_point_list[i:i+5]
-
+    for i in range(len(input_track_point_list) - 5):
+        track_point_list_segment = input_track_point_list[i:i+5]
         track_point_time = track_point_list_segment[2].time
 
         list_segment_lat = list(map(lambda x: x.lat, track_point_list_segment))
@@ -128,14 +171,12 @@ def find_rest_point(input_list):
     :return:
     """
 
-    rest_point_list = []
+    rest_point_list: List[RestTrkPoint] = []
 
     found_seed = False
     seed_rest_point = None
 
     rest_point_candidate = None
-    rest_candidate_list_tot_delta_x = 0
-    rest_candidate_list_tot_delta_y = 0
 
     for i_track_point in input_list:
 
@@ -251,8 +292,20 @@ def find_rest_point(input_list):
 
 
 class TrackAnalyzer:
+    """
+    The TrackAnalyzer class is responsible for analyzing raw track data. It smooths the track data, performs analysis,
+    and identifies rest points.
+
+    :param input_raw_track_object: The raw track data to be analyzed.
+    """
 
     def __init__(self, input_raw_track_object):
+        """
+        Initializes the TrackAnalyzer object with the input raw track data.
+
+        :param input_raw_track_object: The raw track data to be analyzed.
+        :type input_raw_track_object: RawTrackObject
+        """
         if not input_raw_track_object.get_main_tracks().get_main_tracks_points_list():
             raise ValueError("Input track object is empty.")
 
@@ -266,13 +319,37 @@ class TrackAnalyzer:
         )
 
     def get_main_track(self):
+        """
+        Returns the main track of the analyzed track object.
+
+        :return: The main track of the analyzed track object.
+        :rtype: MainTracks
+        """
         return self._analyzed_tracks_object.get_main_tracks()
 
     def get_main_track_list(self):
+        """
+        Returns the main track list of the analyzed track object.
+
+        :return: The main track list of the analyzed track object.
+        :rtype: List[MainTrack]
+        """
         return self._analyzed_tracks_object.get_main_tracks()
 
     def get_waypoint_list(self):
+        """
+        Returns the waypoint list of the analyzed track object.
+
+        :return: The waypoint list of the analyzed track object.
+        :rtype: List[WayPoint]
+        """
         return self._analyzed_tracks_object.get_waypoint_list()
 
     def get_rest_point_list(self):
+        """
+        Returns the rest point list of the analyzed track object.
+
+        :return: The rest point list of the analyzed track object.
+        :rtype: List[RestTrkPoint]
+        """
         return self._analyzed_tracks_object.get_rest_point_list()
