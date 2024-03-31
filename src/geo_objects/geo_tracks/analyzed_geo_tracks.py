@@ -1,6 +1,9 @@
 
+from typing import Union
 from src.geo_objects.geo_tracks.basic_track import BasicTracks
 from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
+from src.geo_objects.geo_points.basic_point import BasicPoint
+from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
 from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint
 
 
@@ -11,12 +14,12 @@ class AnalyzedTracks(BasicTracks):
         Container for hold a Track, composed by the list of AnalyzedTrkPoints.
         Is also can be used for placing certain TrkPoints composed Segments that involved special information.
         like continuously elevation change, or low velocity section.
-
         """
 
+        super().__init__()
         self._main_track_points_list = []
 
-    def add_track_point(self, analyzed_trk_point: AnalyzedTrkPoint):
+    def add_track_point(self, analyzed_trk_point: Union[BasicPoint, RawTrkPoint, AnalyzedTrkPoint]):
         if isinstance(analyzed_trk_point, AnalyzedTrkPoint):
             self._main_track_points_list.append(analyzed_trk_point)
         else:
@@ -35,13 +38,13 @@ class AnalyzedTrackObject(RawTrackObject):
     def __init__(self):
         super(AnalyzedTrackObject, self).__init__()
 
-        self._main_tracks = AnalyzedTracks()
+        self._main_tracks: BasicTracks = AnalyzedTracks()
 
         self._waypoint_list = []
 
-        #===================================================#
-        # Attributes of track, which get from advance calc. #
-        #===================================================#
+        # =================================================== #
+        # Attributes of track, which get from advance calc.   #
+        # =================================================== #
 
         # List of Rest Point
         self._rest_point_list = []
@@ -58,10 +61,9 @@ class AnalyzedTrackObject(RawTrackObject):
     def add_track_point(self, new_point):
         self._main_tracks.add_track_point(new_point)
 
-
-    #=====================#
-    # Set function series #
-    #=====================#
+    # ===================== #
+    # Set function series   #
+    # ===================== #
     def set_rest_point_list(self, input_list):
         self._rest_point_list = input_list
 
@@ -74,9 +76,9 @@ class AnalyzedTrackObject(RawTrackObject):
     def set_great_turn_vector_list(self, input_list):
         self._great_turn_vector_list = input_list
 
-    #=====================#
-    # Get function series #
-    #=====================#
+    # ===================== #
+    # Get function series   #
+    # ===================== #
 
     def get_rest_point_list(self):
         return self._rest_point_list
@@ -92,4 +94,3 @@ class AnalyzedTrackObject(RawTrackObject):
 
     def get_total_integral_distance(self):
         return [i.get_point_integral_dst for i in self._main_tracks]
-
