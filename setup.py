@@ -11,7 +11,6 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.10',
-        'Programming Language :: Python :: 3.11',
     ],
     packages=find_packages(),  # Automatically discover and include all packages
     install_requires=[
