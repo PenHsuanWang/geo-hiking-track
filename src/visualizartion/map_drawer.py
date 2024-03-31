@@ -1,6 +1,6 @@
 import folium
-# from src.geoanalyzer.tracks.track_objects import RestTrkPoint
 from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
+
 
 class FoliumMapDrawer:
 
@@ -8,7 +8,6 @@ class FoliumMapDrawer:
 
         self.fmap = folium.Map(location=[location_x, location_y], zoom_start=zoom_start)
         folium.TileLayer('openstreetmap').add_to(self.fmap)
-
 
     def add_poly_line(self, point_list, weight=8, color=None):
         self.fmap.add_child(folium.PolyLine(locations=point_list, weight=weight))
@@ -21,22 +20,23 @@ class FoliumMapDrawer:
             point_list.append(point)
         self.fmap.add_child(folium.PolyLine(locations=point_list, **kwargs))
 
-
     def draw_points_on_map(self, points, point_type='marker', point_info='', point_color='green', point_radius=8, alpha=0.3):
 
         if not isinstance(points, list):
             points = [points]
 
-        if not point_info=='':
-            point_info+='<br>'
+        if not point_info == '':
+            point_info += '<br>'
 
         for i in points:
             point_location = [i.lat, i.lon]
 
             if isinstance(i, RestTrkPoint):
-                popup_info = '休息點'+'<br>'+str(i.get_start_time().strftime('%H:%M'))+' ~ '+str(i.get_end_time().strftime('%H:%M'))+'<br>'+'Elev: '+str(round(i.elev, 0))+' M'
+                popup_info = ('休息點' + '<br>' +
+                              str(i.get_start_time().strftime('%H:%M')) + ' ~ ' + str(i.get_end_time().strftime('%H:%M')) +
+                              '<br>' + 'Elev: ' + str(round(i.elev, 0)) + ' M')
             else:
-                popup_info = point_info+str(i.time.strftime('%H:%M'))+'<br>'+i.get_note()+'<br>'+str(round(i.elev, 0)) +" M"
+                popup_info = point_info+str(i.time.strftime('%H:%M'))+'<br>'+i.get_note()+'<br>'+str(round(i.elev, 0)) + " M"
 
             popup = folium.Popup(
                 popup_info,
@@ -63,10 +63,8 @@ class FoliumMapDrawer:
                     )
                 )
 
-    def save(self, out_file:str):
+    def save(self, out_file: str):
         if not str(out_file).__contains__('.html'):
             out_file += '.html'
         self.fmap.save(out_file)
         print('saving map: {}'.format(out_file))
-
-

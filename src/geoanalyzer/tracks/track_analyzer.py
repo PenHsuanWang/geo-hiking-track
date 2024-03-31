@@ -1,7 +1,6 @@
 import datetime
 import math
-from typing import List, Union
-# from src.geoanalyzer.tracks.track_objects import RawTrkPoint, RawTracks, AnalyzedTrkPoint, AnalyzedTrackObject, TrackPointVector, RestTrkPoint, RestTrkPointCandidate, SeedRestPoint
+from typing import List
 from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
 from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate
 from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
