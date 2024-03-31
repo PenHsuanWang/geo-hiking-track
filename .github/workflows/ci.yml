@@ -27,4 +27,4 @@ jobs:
         pip install tox
 
     - name: Run tox
-      run: tox -e py${{ matrix.python-version }}-replace(".", ""),mypy,flake8
+      run: tox
