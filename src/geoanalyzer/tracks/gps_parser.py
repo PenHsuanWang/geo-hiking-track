@@ -259,4 +259,3 @@ class GpxParser:
             return None
 
         return note_node.data
-
