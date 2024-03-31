@@ -1,8 +1,11 @@
+from typing import Optional
+
+
 class BasicPoint:
     """
     Basic point object provide a template for all other types of geography gps point to save point
     """
-    def __init__(self, time: str, lat: float, lon: float, elev: float):
+    def __init__(self, time, lat: Optional[float], lon: Optional[float], elev: Optional[float]):
         """
         Initializes a BasicPoint object, provide the basic information of a point
         input the gps track point's time, latitude, longitude, elevation
@@ -44,19 +47,3 @@ class BasicPoint:
     @property
     def is_empty(self):
         return self._is_empty
-    #
-    # def get_point_time(self):
-    #     return self._time
-    #
-    # def get_lat(self):
-    #     return self._lat
-    #
-    # def get_lon(self):
-    #     return self._lon
-    #
-    # def get_elev(self):
-    #     return self._elev
-    #
-    # def is_empty(self):
-    #     return self._is_empty
-

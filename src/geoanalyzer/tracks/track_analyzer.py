@@ -1,37 +1,108 @@
 import datetime
 import math
-# from src.geoanalyzer.tracks.track_objects import RawTrkPoint, RawTracks, AnalyzedTrkPoint, AnalyzedTrackObject, TrackPointVector, RestTrkPoint, RestTrkPointCandidate, SeedRestPoint
+from typing import List
 from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
 from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate
 from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
 
+#
+# def sum_delta_between_every_element(input_list: List[Union[float, datetime.timedelta]]) -> float:
+#     """
+#     Calculate the total of differences between successive elements in a list of values. This function
+#     supports lists of either numerical values (float) for spatial attributes or `datetime.timedelta`
+#     objects for temporal attributes of GPS track points. The list should be homogeneous, containing
+#     elements of only one of the specified types.
+#
+#     Args:
+#         input_list (List[Union[float, datetime.timedelta]]): A list of attribute values extracted
+#         from track points. The list must be homogeneous.
+#
+#     Returns:
+#         float: The total of differences between successive elements in the list. For temporal attributes,
+#         the difference is returned in seconds.
+#
+#     Raises:
+#         ValueError: If the input list contains fewer than two elements or is not homogeneous.
+#         TypeError: If the list contains elements other than float or datetime.timedelta.
+#     """
+#     if len(input_list) < 2:
+#         raise ValueError("Input list must contain at least two elements to calculate differences.")
+#
+#     # Determine the type of the first element, which we'll use to check list homogeneity
+#     first_element_type = type(input_list[0])
+#
+#     if not all(isinstance(item, first_element_type) for item in input_list):
+#         raise ValueError("Input list must be homogeneous.")
+#
+#     tot_delta = 0.0
+#
+#     for i in range(len(input_list) - 1):
+#
+#         delta_element = input_list[i + 1] - input_list[i]
+#
+#         if isinstance(delta_element, (float, int)):
+#             tot_delta += delta_element
+#         elif isinstance(delta_element, datetime.timedelta):
+#             tot_delta += delta_element.total_seconds()
+#         else:
+#             raise TypeError("Element type not supported.")
+#     return tot_delta
 
-def sum_delta_between_every_element(input_list):
-    tot_delta = 0
-    for i in range(len(input_list) - 1):
 
-        delta_element = input_list[i + 1] - input_list[i]
+def sum_numeric_deltas(input_list: List[float]) -> float:
+    """
+    Calculate the sum of numerical differences between successive elements in a list.
 
-        if isinstance(delta_element, (float, int)):
-            tot_delta += delta_element
-        elif isinstance(delta_element, datetime.timedelta):
-            tot_delta += delta_element.seconds
-        else:
-            raise TypeError
+    :param input_list: A list of numerical values. The list must contain at least two elements.
+    :type input_list: List[float]
+    :return: The sum of differences between each successive pair of elements in the list.
+    :rtype: float
+    :raises ValueError: If the input list contains fewer than two elements.
+    """
+    if len(input_list) < 2:
+        raise ValueError("Input list must contain at least two elements to calculate differences.")
+    return sum(input_list[i + 1] - input_list[i] for i in range(len(input_list) - 1))
 
-    return tot_delta
+
+def sum_timedelta_deltas(input_list: List[datetime.timedelta]) -> float:
+    """
+    Calculate the sum of timedelta differences between successive elements in a list, in seconds.
+
+    :param input_list: A list of datetime.timedelta objects. The list must contain at least two elements.
+    :type input_list: List[datetime.timedelta]
+    :return: The sum of differences between each successive pair of elements in the list, in seconds.
+    :rtype: float
+    :raises ValueError: If the input list contains fewer than two elements.
+    """
+    if len(input_list) < 2:
+        raise ValueError("Input list must contain at least two elements to calculate differences.")
+    return sum((input_list[i + 1] - input_list[i]).total_seconds() for i in range(len(input_list) - 1))
 
 
-def smoothing_tracks(input_track_point_list) -> list:
-    def average(input_list):
+def smoothing_tracks(input_track_point_list: List[RawTrkPoint]) -> List[RawTrkPoint]:
+    """
+    Smooths the GPS track data by averaging the latitude, longitude, and elevation values over a sliding window of track points.
+
+    :param input_track_point_list: A list of RawTrkPoint objects representing the GPS track points.
+    :type input_track_point_list: List[RawTrkPoint]
+    :return: A list of RawTrkPoint objects representing the smoothed GPS track points.
+    :rtype: List[RawTrkPoint]
+    """
+    def average(input_list: List[float]) -> float:
+        """
+        Calculates the average of a list of numbers.
+
+        :param input_list: A list of numbers.
+        :type input_list: List[float]
+        :return: The average of the input list.
+        :rtype: float
+        """
         return sum(input_list) / len(input_list)
 
-    raw_track_point_list = input_track_point_list
-    averaged_tracks_list = []
+    averaged_tracks_list: List[RawTrkPoint] = []
 
-    for i in range(len(raw_track_point_list) - 5):
-        track_point_list_segment = raw_track_point_list[i:i+5]
-
+    for i in range(len(input_track_point_list) - 5):
+        track_point_list_segment = input_track_point_list[i:i+5]
         track_point_time = track_point_list_segment[2].time
 
         list_segment_lat = list(map(lambda x: x.lat, track_point_list_segment))
@@ -67,11 +138,11 @@ def do_analyzing(input_track_point_list):
         list_segment_time = list(map(lambda x: x.time, track_point_list_segment))
 
         # 1 degree is 101751 meters in Lon direction
-        delta_x = sum_delta_between_every_element(list_segment_lon)/(len(list_segment_lon)-1) * 101751
+        delta_x = sum_numeric_deltas(list_segment_lon)/(len(list_segment_lon)-1) * 101751
         # 1 degree is 110757 meters in Lat direction
-        delta_y = sum_delta_between_every_element(list_segment_lat)/(len(list_segment_lat)-1) * 110757
-        delta_z = sum_delta_between_every_element(list_segment_elev)/(len(list_segment_elev)-1)
-        delta_t = sum_delta_between_every_element(list_segment_time)/(len(list_segment_time)-1)
+        delta_y = sum_numeric_deltas(list_segment_lat)/(len(list_segment_lat)-1) * 110757
+        delta_z = sum_numeric_deltas(list_segment_elev)/(len(list_segment_elev)-1)
+        delta_t = sum_timedelta_deltas(list_segment_time)/(len(list_segment_time)-1)
 
         target_analyzing_track_object.add_track_point(
             AnalyzedTrkPoint(
@@ -128,45 +199,51 @@ def find_rest_point(input_list):
     :return:
     """
 
-    rest_point_list = []
+    # # Check if input_list is None or empty
+    # if not input_list:
+    #     raise ValueError("input_list cannot be None or empty")
+    #
+    # # Check if elements in input_list are instances of TrackPoint
+    # if not all(isinstance(i, BasicPoint) for i in input_list):
+    #     raise ValueError("All elements in input_list must be instances of the TrackPoint class")
+
+    rest_point_list: List[RestTrkPoint] = []
 
     found_seed = False
     seed_rest_point = None
 
     rest_point_candidate = None
-    rest_candidate_list_tot_delta_x = 0
-    rest_candidate_list_tot_delta_y = 0
 
     for i_track_point in input_list:
 
         if i_track_point.get_speed_xy() < 0.1:
 
-            #=======================#
-            # If SeedPoint is found #
-            #=======================#
+            # ======================= #
+            # If SeedPoint is found   #
+            # ======================= #
             if found_seed:
                 continue
 
-            #==============================#
-            # SeedPoint is not yet found ! #
-            #==============================#
+            # ============================== #
+            # SeedPoint is not yet found !   #
+            # ============================== #
             if rest_point_candidate is None:
                 rest_point_candidate = RestTrkPointCandidate(i_track_point)
 
             elif isinstance(rest_point_candidate, RestTrkPointCandidate):
 
                 if rest_point_candidate.get_tot_delta_x() > 20 or rest_point_candidate.get_tot_delta_y() > 20:
-                    #===========================================#
-                    # False condition, purge RestPointCandidate #
-                    #===========================================#
+                    # =========================================== #
+                    # False condition, purge RestPointCandidate   #
+                    # =========================================== #
                     del rest_point_candidate
                     rest_point_candidate = None  # rest rest_point_candidate
                     continue
 
                 if rest_point_candidate.calculate_time_spend(i_track_point) > 60:
-                    #====================================================#
-                    # True condition, go to flush this candidate as seed #
-                    #====================================================#
+                    # ==================================================== #
+                    # True condition, go to flush this candidate as seed   #
+                    # ==================================================== #
                     if not found_seed:
                         found_seed = True
                         seed_rest_point = rest_point_candidate.flush_to_rest_seed()
@@ -177,16 +254,15 @@ def find_rest_point(input_list):
                         raise Exception
 
                 elif rest_point_candidate.calculate_time_spend(i_track_point) <= 60:
-                    #==============================#
-                    # Add new rest point candidate #
-                    #==============================#
+                    # ============================== #
+                    # Add new rest point candidate   #
+                    # ============================== #
                     rest_point_candidate.add_candidate(i_track_point)
                     continue
 
                 else:
                     print("Peculiar case happen, which I did not considered")
                     raise Exception
-
 
         elif i_track_point.get_speed_xy() >= 0.1:
 
@@ -196,26 +272,30 @@ def find_rest_point(input_list):
                 if not (within 20 meter apart from seed center), pass this iteration (continue)
                 if yes, complete this rest point collection, flush rest point and reset the seed.
                 """
+
+                if seed_rest_point is None:
+                    raise ValueError("Seed rest point is None when it should have been initialized.")
+
                 x_shift = math.fabs((i_track_point.lon-seed_rest_point.lon)*110751)
                 y_shift = math.fabs((i_track_point.lat-seed_rest_point.lat)*110757)
                 if x_shift < 20 and y_shift < 20:
-                    continue
+                    pass
                 else:
                     # Stop to collect resting point,
                     # flush and delete all collecting object
 
                     if len(rest_point_list) > 0 and (seed_rest_point.start_time - rest_point_list[-1].get_end_time()).seconds < 120:
-                        #============================================================================================#
-                        # If the seed rest point's start time is too close to previous rest point's end time         #
-                        # The new seeding point maybe the same rest point, Do not append this seed as new rest point #
-                        # Update the last rest point in list's setting the end time to current point time            #
-                        #============================================================================================#
+                        # ============================================================================================ #
+                        # If the seed rest point's start time is too close to previous rest point's end time           #
+                        # The new seeding point maybe the same rest point, Do not append this seed as new rest point   #
+                        # Update the last rest point in list's setting the end time to current point time              #
+                        # ============================================================================================ #
                         rest_point_list[-1].update_end_time(i_track_point.time)
 
                     else:
-                        #==================================================================================#
-                        # Check the SeedRestPoint start time is greater than previous appended rest point! #
-                        #==================================================================================#
+                        # ================================================================================== #
+                        # Check the SeedRestPoint start time is greater than previous appended rest point!   #
+                        # ================================================================================== #
                         rest_point_confirmed = RestTrkPoint(
                             seed_rest_point.start_time,
                             seed_rest_point.lat,
@@ -227,9 +307,9 @@ def find_rest_point(input_list):
 
                         rest_point_list.append(rest_point_confirmed)
 
-                    #=======================#
-                    # Reset rest point seed #
-                    #=======================#
+                    # ======================= #
+                    # Reset rest point seed   #
+                    # ======================= #
                     del seed_rest_point
                     seed_rest_point = None
                     found_seed = False
@@ -241,7 +321,7 @@ def find_rest_point(input_list):
                 else:
                     rest_point_candidate.add_candidate(i_track_point)
             elif rest_point_candidate is None:
-                continue
+                pass
 
             else:
                 print("Peculiar Case which I did not considered")
@@ -252,8 +332,22 @@ def find_rest_point(input_list):
 
 
 class TrackAnalyzer:
+    """
+    The TrackAnalyzer class is responsible for analyzing raw track data. It smooths the track data, performs analysis,
+    and identifies rest points.
+
+    :param input_raw_track_object: The raw track data to be analyzed.
+    """
 
     def __init__(self, input_raw_track_object):
+        """
+        Initializes the TrackAnalyzer object with the input raw track data.
+
+        :param input_raw_track_object: The raw track data to be analyzed.
+        :type input_raw_track_object: RawTrackObject
+        """
+        if not input_raw_track_object.get_main_tracks().get_main_tracks_points_list():
+            raise ValueError("Input track object is empty.")
 
         input_raw_track_point_list = input_raw_track_object.get_main_tracks().get_main_tracks_points_list()
         smooth_track_list = smoothing_tracks(input_raw_track_point_list)
@@ -265,14 +359,37 @@ class TrackAnalyzer:
         )
 
     def get_main_track(self):
+        """
+        Returns the main track of the analyzed track object.
+
+        :return: The main track of the analyzed track object.
+        :rtype: MainTracks
+        """
         return self._analyzed_tracks_object.get_main_tracks()
 
     def get_main_track_list(self):
+        """
+        Returns the main track list of the analyzed track object.
+
+        :return: The main track list of the analyzed track object.
+        :rtype: List[MainTrack]
+        """
         return self._analyzed_tracks_object.get_main_tracks()
 
     def get_waypoint_list(self):
+        """
+        Returns the waypoint list of the analyzed track object.
+
+        :return: The waypoint list of the analyzed track object.
+        :rtype: List[WayPoint]
+        """
         return self._analyzed_tracks_object.get_waypoint_list()
 
     def get_rest_point_list(self):
-        return self._analyzed_tracks_object.get_rest_point_list()
+        """
+        Returns the rest point list of the analyzed track object.
 
+        :return: The rest point list of the analyzed track object.
+        :rtype: List[RestTrkPoint]
+        """
+        return self._analyzed_tracks_object.get_rest_point_list()

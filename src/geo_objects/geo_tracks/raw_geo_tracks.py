@@ -1,4 +1,6 @@
+from typing import Union
 from src.geo_objects.geo_tracks.basic_track import BasicTracks
+from src.geo_objects.geo_points.basic_point import BasicPoint
 from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
 
 
@@ -12,7 +14,7 @@ class RawTracks(BasicTracks):
         super().__init__()
         self._main_track_points_list = []
 
-    def add_track_point(self, raw_track_point: RawTrkPoint):
+    def add_track_point(self, raw_track_point: Union[BasicPoint, RawTrkPoint]):
 
         if isinstance(raw_track_point, RawTrkPoint):
             self._main_track_points_list.append(raw_track_point)
@@ -25,7 +27,7 @@ class RawTrackObject:
 
     def __init__(self):
 
-        self._main_tracks = RawTracks()
+        self._main_tracks: BasicTracks = RawTracks()
         self._waypoint_list = []
 
     def add_track_point(self, new_track_point):

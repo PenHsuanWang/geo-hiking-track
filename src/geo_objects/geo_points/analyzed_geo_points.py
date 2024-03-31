@@ -27,9 +27,9 @@ class AnalyzedTrkPoint(BasicPoint):
     def set_point_integral_dst(self, in_dst):
         self._integral_dst = in_dst
 
-    #=====================================================#
-    # get methods for return the value about displacement #
-    #=====================================================#
+    # ===================================================== #
+    # get methods for return the value about displacement   #
+    # ===================================================== #
     def get_delta_x(self):
         return self._dx
 
@@ -45,15 +45,15 @@ class AnalyzedTrkPoint(BasicPoint):
     def get_point_integral_dst(self):
         return self._integral_dst
 
-    #============#
-    # Delta time #
-    #============#
+    # ============ #
+    # Delta time  #
+    # ============ #
     def get_point_delta_time(self):
         return self._dt
 
-    #===========================================================#
-    # get methods for return the value about speed and velocity #
-    #===========================================================#
+    # =========================================================== #
+    # get methods for return the value about speed and velocity   #
+    # =========================================================== #
 
     def get_speed_x(self):
         return self._dx/self._dt
