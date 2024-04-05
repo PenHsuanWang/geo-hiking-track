@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.geoanalyzer.tracks package &mdash; Geo Hiking Track 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=fc035491" />
+      <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7026087e"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Geo Hiking Track
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">src.geoanalyzer.tracks package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.geoanalyzer.tracks.gps_parser">src.geoanalyzer.tracks.gps_parser module</a><ul>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.GpxParser"><code class="docutils literal notranslate"><span class="pre">GpxParser</span></code></a><ul>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.GpxParser.get_raw_track_object"><code class="docutils literal notranslate"><span class="pre">GpxParser.get_raw_track_object()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.GpxParser.processing_track_point_list"><code class="docutils literal notranslate"><span class="pre">GpxParser.processing_track_point_list()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.GpxParser.processing_waypoint_list"><code class="docutils literal notranslate"><span class="pre">GpxParser.processing_waypoint_list()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.extract_track_point_from_xmldoc"><code class="docutils literal notranslate"><span class="pre">extract_track_point_from_xmldoc()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.extract_waypoint_from_xmldoc"><code class="docutils literal notranslate"><span class="pre">extract_waypoint_from_xmldoc()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.parse_gpx"><code class="docutils literal notranslate"><span class="pre">parse_gpx()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.gps_parser.parse_time"><code class="docutils literal notranslate"><span class="pre">parse_time()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.geoanalyzer.tracks.track_analyzer">src.geoanalyzer.tracks.track_analyzer module</a><ul>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer"><code class="docutils literal notranslate"><span class="pre">TrackAnalyzer</span></code></a><ul>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_main_track"><code class="docutils literal notranslate"><span class="pre">TrackAnalyzer.get_main_track()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_main_track_list"><code class="docutils literal notranslate"><span class="pre">TrackAnalyzer.get_main_track_list()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_rest_point_list"><code class="docutils literal notranslate"><span class="pre">TrackAnalyzer.get_rest_point_list()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_waypoint_list"><code class="docutils literal notranslate"><span class="pre">TrackAnalyzer.get_waypoint_list()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.do_analyzing"><code class="docutils literal notranslate"><span class="pre">do_analyzing()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.find_rest_point"><code class="docutils literal notranslate"><span class="pre">find_rest_point()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.smoothing_tracks"><code class="docutils literal notranslate"><span class="pre">smoothing_tracks()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.sum_numeric_deltas"><code class="docutils literal notranslate"><span class="pre">sum_numeric_deltas()</span></code></a></li>
+<li><a class="reference internal" href="#src.geoanalyzer.tracks.track_analyzer.sum_timedelta_deltas"><code class="docutils literal notranslate"><span class="pre">sum_timedelta_deltas()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.geoanalyzer.tracks">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Geo Hiking Track</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">src.geoanalyzer.tracks package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/src.geoanalyzer.tracks.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-geoanalyzer-tracks-package">
+<h1>src.geoanalyzer.tracks package<a class="headerlink" href="#src-geoanalyzer-tracks-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.geoanalyzer.tracks.gps_parser">
+<span id="src-geoanalyzer-tracks-gps-parser-module"></span><h2>src.geoanalyzer.tracks.gps_parser module<a class="headerlink" href="#module-src.geoanalyzer.tracks.gps_parser" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.GpxParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.gps_parser.</span></span><span class="sig-name descname"><span class="pre">GpxParser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gpx_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.GpxParser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parser class for extracting data from GPX files.</p>
+<p>Takes a path to a GPX file, parses it, and extracts geographical data, including waypoints and
+track points. The extracted data is used to populate a RawTrackObject with instances of WayPoint
+and RawTrkPoint, which can then be further processed or analyzed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_infile</strong> – Path to the input GPX file.</p></li>
+<li><p><strong>_target_track_object</strong> – Container for the extracted waypoints and track points.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>gpx_file</strong> (<em>str</em>) – The file path to the GPX file to be processed.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.GpxParser.get_raw_track_object">
+<span class="sig-name descname"><span class="pre">get_raw_track_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.geo_objects.geo_tracks.html#src.geo_objects.geo_tracks.raw_geo_tracks.RawTrackObject" title="src.geo_objects.geo_tracks.raw_geo_tracks.RawTrackObject"><span class="pre">RawTrackObject</span></a></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.GpxParser.get_raw_track_object" title="Link to this definition"></a></dt>
+<dd><p>Returns the populated RawTrackObject with GPX data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The populated RawTrackObject.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="src.geo_objects.geo_tracks.html#src.geo_objects.geo_tracks.raw_geo_tracks.RawTrackObject" title="src.geo_objects.geo_tracks.raw_geo_tracks.RawTrackObject">RawTrackObject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.GpxParser.processing_track_point_list">
+<span class="sig-name descname"><span class="pre">processing_track_point_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.GpxParser.processing_track_point_list" title="Link to this definition"></a></dt>
+<dd><p>Processes a list of track point nodes and adds them to the track object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_list</strong> (<em>List</em><em>[</em><em>minidom.Node</em><em>]</em>) – List of track point nodes to be processed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.GpxParser.processing_waypoint_list">
+<span class="sig-name descname"><span class="pre">processing_waypoint_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.GpxParser.processing_waypoint_list" title="Link to this definition"></a></dt>
+<dd><p>Processes a list of waypoint nodes and adds them to the track object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_list</strong> (<em>List</em><em>[</em><em>minidom.Node</em><em>]</em>) – List of waypoint nodes to be processed.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.extract_track_point_from_xmldoc">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.gps_parser.</span></span><span class="sig-name descname"><span class="pre">extract_track_point_from_xmldoc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmldoc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'trkpt'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.extract_track_point_from_xmldoc" title="Link to this definition"></a></dt>
+<dd><p>Extracts track points from the XML structure of a GPX file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xmldoc</strong> – The XML structure of the GPX file.</p></li>
+<li><p><strong>tag_name</strong> (<em>str</em>) – The tag name of track points. Default is ‘trkpt’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of track points.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[minidom.Node]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.extract_waypoint_from_xmldoc">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.gps_parser.</span></span><span class="sig-name descname"><span class="pre">extract_waypoint_from_xmldoc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmldoc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tag_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'wpt'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.extract_waypoint_from_xmldoc" title="Link to this definition"></a></dt>
+<dd><p>Extracts all waypoints from the given GPX XML document.</p>
+<p>Finds all XML nodes corresponding to waypoints in the GPX document,
+based on the specified tag name, and returns them as a list. By default,
+it looks for ‘wpt’ tags, which represent waypoints in GPX files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xmldoc</strong> – The XML structure of the GPX file.</p></li>
+<li><p><strong>tag_name</strong> (<em>str</em>) – The tag name of waypoints. Default is ‘wpt’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of waypoints.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[minidom.Node]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.parse_gpx">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.gps_parser.</span></span><span class="sig-name descname"><span class="pre">parse_gpx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_gpx_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Document</span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.parse_gpx" title="Link to this definition"></a></dt>
+<dd><p>Parse a GPX file and return its XML document representation.</p>
+<p>Reads a GPX file from the given file path, parses it into an XML document using the
+<cite>minidom</cite> parser, and returns the document object for further processing. Raises a
+FileNotFoundError if the specified GPX file does not exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_gpx_file</strong> (<em>str</em>) – The file path to the GPX file to be parsed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The parsed XML document object of the GPX file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>minidom.Document</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the specified GPX file does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.gps_parser.parse_time">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.gps_parser.</span></span><span class="sig-name descname"><span class="pre">parse_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">datetime</span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.gps_parser.parse_time" title="Link to this definition"></a></dt>
+<dd><p>Parses a time string from a GPX file into a datetime object.</p>
+<p>Converts a time string in the format “%Y-%m-%dT%H:%M:%SZ” from the GPX file to
+a datetime object, adjusting for the timezone if necessary. The implementation
+should be adapted to handle timezone information more dynamically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_time</strong> (<em>str</em>) – The input time string in “%Y-%m-%dT%H:%M:%SZ” format.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The parsed datetime object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>datetime.datetime</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If there is an error parsing the datetime.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.geoanalyzer.tracks.track_analyzer">
+<span id="src-geoanalyzer-tracks-track-analyzer-module"></span><h2>src.geoanalyzer.tracks.track_analyzer module<a class="headerlink" href="#module-src.geoanalyzer.tracks.track_analyzer" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.track_analyzer.</span></span><span class="sig-name descname"><span class="pre">TrackAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_raw_track_object</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The TrackAnalyzer class is responsible for analyzing raw track data. It smooths the track data, performs analysis,
+and identifies rest points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_raw_track_object</strong> – The raw track data to be analyzed.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_main_track">
+<span class="sig-name descname"><span class="pre">get_main_track</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_main_track" title="Link to this definition"></a></dt>
+<dd><p>Returns the main track of the analyzed track object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The main track of the analyzed track object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>MainTracks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_main_track_list">
+<span class="sig-name descname"><span class="pre">get_main_track_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_main_track_list" title="Link to this definition"></a></dt>
+<dd><p>Returns the main track list of the analyzed track object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The main track list of the analyzed track object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[MainTrack]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_rest_point_list">
+<span class="sig-name descname"><span class="pre">get_rest_point_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_rest_point_list" title="Link to this definition"></a></dt>
+<dd><p>Returns the rest point list of the analyzed track object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The rest point list of the analyzed track object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="src.geo_objects.geo_points.html#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint" title="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint">RestTrkPoint</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_waypoint_list">
+<span class="sig-name descname"><span class="pre">get_waypoint_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.TrackAnalyzer.get_waypoint_list" title="Link to this definition"></a></dt>
+<dd><p>Returns the waypoint list of the analyzed track object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The waypoint list of the analyzed track object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference internal" href="src.geo_objects.geo_points.html#src.geo_objects.geo_points.raw_geo_points.WayPoint" title="src.geo_objects.geo_points.raw_geo_points.WayPoint">WayPoint</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.do_analyzing">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.track_analyzer.</span></span><span class="sig-name descname"><span class="pre">do_analyzing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_track_point_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.do_analyzing" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.find_rest_point">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.track_analyzer.</span></span><span class="sig-name descname"><span class="pre">find_rest_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.find_rest_point" title="Link to this definition"></a></dt>
+<dd><p>finding the rest point from the gpx tracks!</p>
+<p>Rest Point Candidate =&gt; SeedPoint =&gt; RestTrkPoint</p>
+<dl>
+<dt>Rest Point Candidate:</dt><dd><dl class="simple">
+<dt>First RestPointCandidate:</dt><dd><p>the point speed X and speed Y &lt; 0.1 can be treated as first RestPointCandidate.</p>
+</dd>
+<dt>Second RestPointCandidate:</dt><dd><p>the second RestPointCandidate’s speed X and speed Y should &lt; 0.1 also =&gt; two continuous point with low speed</p>
+</dd>
+<dt>Following Point:</dt><dd><p>if following point’s speed &gt; 0.1: check:
+total X, Y drifting distance (tot_delta X or Y) &lt; 20 meters.
+if drifting distance &lt; 20 meters =&gt; this anomaly high speed point is tolerance</p>
+</dd>
+<dt>If total accumulate time &gt; 60 seconds and total drifting &lt; 20 either in X or Y distance:</dt><dd><p>Go to next step =&gt; create SeedPoint.</p>
+</dd>
+</dl>
+</dd>
+<dt>SeedPoint:</dt><dd><dl class="simple">
+<dt>multiple Rest Point Candidate gather together and satisfied following rule:</dt><dd><ol class="arabic simple">
+<li><p>time spend from first point to current check is &gt; 60 seconds</p></li>
+<li><p>total drifting distance &lt; 20 either in X or Y direction</p></li>
+</ol>
+</dd>
+</dl>
+<p>Taking current Rest Point Candidates’ average lon and lat as location:</p>
+</dd>
+<dt>RestTrkPoint:</dt><dd><p>once SeedPoint found, the RestTrkPoint is going to create.
+The information of RestTrkPoint needed:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>location (lat, lon, elev)</p></li>
+<li><p>time (start time, end time)</p></li>
+</ol>
+</div></blockquote>
+<p>take SeedPoint’s location as RestTrkPoint’s location.
+Condition of RestTrkPoint Collection complete:</p>
+<blockquote>
+<div><p>the last point exceed 20 meters away from SeedPoint location, and moving speed &gt; 0.1</p>
+</div></blockquote>
+<p>Create RestTrkPoint using
+(SeedPoint lat, SeedPoint lon, SeedPoint elev, RestPointCandidate StartTime, LastPoint’s time as end time)</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_list</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.smoothing_tracks">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.track_analyzer.</span></span><span class="sig-name descname"><span class="pre">smoothing_tracks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_track_point_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.geo_objects.geo_points.html#src.geo_objects.geo_points.raw_geo_points.RawTrkPoint" title="src.geo_objects.geo_points.raw_geo_points.RawTrkPoint"><span class="pre">RawTrkPoint</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.geo_objects.geo_points.html#src.geo_objects.geo_points.raw_geo_points.RawTrkPoint" title="src.geo_objects.geo_points.raw_geo_points.RawTrkPoint"><span class="pre">RawTrkPoint</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.smoothing_tracks" title="Link to this definition"></a></dt>
+<dd><p>Smooths the GPS track data by averaging the latitude, longitude, and elevation values over a sliding window of track points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_track_point_list</strong> (<em>List</em><em>[</em><a class="reference internal" href="src.geo_objects.geo_points.html#src.geo_objects.geo_points.raw_geo_points.RawTrkPoint" title="src.geo_objects.geo_points.raw_geo_points.RawTrkPoint"><em>RawTrkPoint</em></a><em>]</em>) – A list of RawTrkPoint objects representing the GPS track points.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of RawTrkPoint objects representing the smoothed GPS track points.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="src.geo_objects.geo_points.html#src.geo_objects.geo_points.raw_geo_points.RawTrkPoint" title="src.geo_objects.geo_points.raw_geo_points.RawTrkPoint">RawTrkPoint</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.sum_numeric_deltas">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.track_analyzer.</span></span><span class="sig-name descname"><span class="pre">sum_numeric_deltas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.sum_numeric_deltas" title="Link to this definition"></a></dt>
+<dd><p>Calculate the sum of numerical differences between successive elements in a list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_list</strong> (<em>List</em><em>[</em><em>float</em><em>]</em>) – A list of numerical values. The list must contain at least two elements.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sum of differences between each successive pair of elements in the list.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the input list contains fewer than two elements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.geoanalyzer.tracks.track_analyzer.sum_timedelta_deltas">
+<span class="sig-prename descclassname"><span class="pre">src.geoanalyzer.tracks.track_analyzer.</span></span><span class="sig-name descname"><span class="pre">sum_timedelta_deltas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">timedelta</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geoanalyzer.tracks.track_analyzer.sum_timedelta_deltas" title="Link to this definition"></a></dt>
+<dd><p>Calculate the sum of timedelta differences between successive elements in a list, in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_list</strong> (<em>List</em><em>[</em><em>datetime.timedelta</em><em>]</em>) – A list of datetime.timedelta objects. The list must contain at least two elements.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sum of differences between each successive pair of elements in the list, in seconds.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the input list contains fewer than two elements.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.geoanalyzer.tracks">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.geoanalyzer.tracks" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Pen Hsuan Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

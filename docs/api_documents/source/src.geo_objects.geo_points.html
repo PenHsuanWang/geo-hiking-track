@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.geo_objects.geo_points package &mdash; Geo Hiking Track 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=fc035491" />
+      <link rel="stylesheet" type="text/css" href="../_static/fonts.css?v=5583d106" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=7026087e"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Geo Hiking Track
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">src.geo_objects.geo_points package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-src.geo_objects.geo_points.analyzed_geo_points">src.geo_objects.geo_points.analyzed_geo_points module</a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint</span></code></a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_x"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_delta_x()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_xy"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_delta_xy()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_y"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_delta_y()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_z"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_delta_z()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_point_delta_time"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_point_delta_time()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_point_integral_dst"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_point_integral_dst()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_x"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_speed_x()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_xy"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_speed_xy()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_y"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_speed_y()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_z"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_speed_z()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_velocity_xy"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_velocity_xy()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_velocity_xyx"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.get_velocity_xyx()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.set_point_integral_dst"><code class="docutils literal notranslate"><span class="pre">AnalyzedTrkPoint.set_point_integral_dst()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint"><code class="docutils literal notranslate"><span class="pre">RestTrkPoint</span></code></a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_end_time"><code class="docutils literal notranslate"><span class="pre">RestTrkPoint.get_end_time()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_rest_time_spend"><code class="docutils literal notranslate"><span class="pre">RestTrkPoint.get_rest_time_spend()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_start_time"><code class="docutils literal notranslate"><span class="pre">RestTrkPoint.get_start_time()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.update_end_time"><code class="docutils literal notranslate"><span class="pre">RestTrkPoint.update_end_time()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.update_start_time"><code class="docutils literal notranslate"><span class="pre">RestTrkPoint.update_start_time()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate</span></code></a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.add_candidate"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.add_candidate()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.calculate_time_spend"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.calculate_time_spend()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.flush_to_rest_seed"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.flush_to_rest_seed()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_elev"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_average_elev()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_lat"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_average_lat()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_lon"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_average_lon()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_point_count"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_point_count()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_start_time"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_start_time()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_delta_x"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_tot_delta_x()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_delta_y"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_tot_delta_y()</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_time_spend"><code class="docutils literal notranslate"><span class="pre">RestTrkPointCandidate.get_tot_time_spend()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint"><code class="docutils literal notranslate"><span class="pre">SeedRestPoint</span></code></a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.elev"><code class="docutils literal notranslate"><span class="pre">SeedRestPoint.elev</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.lat"><code class="docutils literal notranslate"><span class="pre">SeedRestPoint.lat</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.lon"><code class="docutils literal notranslate"><span class="pre">SeedRestPoint.lon</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.start_time"><code class="docutils literal notranslate"><span class="pre">SeedRestPoint.start_time</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.geo_objects.geo_points.basic_point">src.geo_objects.geo_points.basic_point module</a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint"><code class="docutils literal notranslate"><span class="pre">BasicPoint</span></code></a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint.elev"><code class="docutils literal notranslate"><span class="pre">BasicPoint.elev</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint.is_empty"><code class="docutils literal notranslate"><span class="pre">BasicPoint.is_empty</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint.lat"><code class="docutils literal notranslate"><span class="pre">BasicPoint.lat</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint.lon"><code class="docutils literal notranslate"><span class="pre">BasicPoint.lon</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint.time"><code class="docutils literal notranslate"><span class="pre">BasicPoint.time</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.geo_objects.geo_points.raw_geo_points">src.geo_objects.geo_points.raw_geo_points module</a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.raw_geo_points.RawTrkPoint"><code class="docutils literal notranslate"><span class="pre">RawTrkPoint</span></code></a></li>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.raw_geo_points.WayPoint"><code class="docutils literal notranslate"><span class="pre">WayPoint</span></code></a><ul>
+<li><a class="reference internal" href="#src.geo_objects.geo_points.raw_geo_points.WayPoint.get_note"><code class="docutils literal notranslate"><span class="pre">WayPoint.get_note()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-src.geo_objects.geo_points">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Geo Hiking Track</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">src.geo_objects.geo_points package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/source/src.geo_objects.geo_points.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-geo-objects-geo-points-package">
+<h1>src.geo_objects.geo_points package<a class="headerlink" href="#src-geo-objects-geo-points-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.geo_objects.geo_points.analyzed_geo_points">
+<span id="src-geo-objects-geo-points-analyzed-geo-points-module"></span><h2>src.geo_objects.geo_points.analyzed_geo_points module<a class="headerlink" href="#module-src.geo_objects.geo_points.analyzed_geo_points" title="Link to this heading"></a></h2>
+<p>The analyzed geography point is on top of the raw point, it provide the displacement information
+including the delta x, delta y, delta z, delta xy, delta time, speed x, speed y, speed z, speed xy,
+and more other type of point like RestPoint and SeedPoint is designed to
+specific function like clustering closing point while tracker in rest</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geo_objects.geo_points.analyzed_geo_points.</span></span><span class="sig-name descname"><span class="pre">AnalyzedTrkPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elev</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint" title="src.geo_objects.geo_points.basic_point.BasicPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicPoint</span></code></a></p>
+<p>Analyzed track point object is the model to save track point</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_x">
+<span class="sig-name descname"><span class="pre">get_delta_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_xy">
+<span class="sig-name descname"><span class="pre">get_delta_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_y">
+<span class="sig-name descname"><span class="pre">get_delta_y</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_y" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_z">
+<span class="sig-name descname"><span class="pre">get_delta_z</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_delta_z" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_point_delta_time">
+<span class="sig-name descname"><span class="pre">get_point_delta_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_point_delta_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_point_integral_dst">
+<span class="sig-name descname"><span class="pre">get_point_integral_dst</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_point_integral_dst" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_x">
+<span class="sig-name descname"><span class="pre">get_speed_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_xy">
+<span class="sig-name descname"><span class="pre">get_speed_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_xy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_y">
+<span class="sig-name descname"><span class="pre">get_speed_y</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_y" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_z">
+<span class="sig-name descname"><span class="pre">get_speed_z</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_speed_z" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_velocity_xy">
+<span class="sig-name descname"><span class="pre">get_velocity_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_velocity_xy" title="Link to this definition"></a></dt>
+<dd><p>Return a 2-D array [Vx, Vy], the vector about velocity
+:return: list[Vx, Vy]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_velocity_xyx">
+<span class="sig-name descname"><span class="pre">get_velocity_xyx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.get_velocity_xyx" title="Link to this definition"></a></dt>
+<dd><p>Return a 3-D array [Vx, Vy, Vz], the vector about velocity
+:return: list[Vx, Vy, Vz]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.set_point_integral_dst">
+<span class="sig-name descname"><span class="pre">set_point_integral_dst</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_dst</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint.set_point_integral_dst" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geo_objects.geo_points.analyzed_geo_points.</span></span><span class="sig-name descname"><span class="pre">RestTrkPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elev</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint" title="src.geo_objects.geo_points.basic_point.BasicPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicPoint</span></code></a></p>
+<p>Rest track point object is the model to save track point</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_end_time">
+<span class="sig-name descname"><span class="pre">get_end_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_end_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_rest_time_spend">
+<span class="sig-name descname"><span class="pre">get_rest_time_spend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_rest_time_spend" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_start_time">
+<span class="sig-name descname"><span class="pre">get_start_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.get_start_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.update_end_time">
+<span class="sig-name descname"><span class="pre">update_end_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_end_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.update_end_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.update_start_time">
+<span class="sig-name descname"><span class="pre">update_start_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_start_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPoint.update_start_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geo_objects.geo_points.analyzed_geo_points.</span></span><span class="sig-name descname"><span class="pre">RestTrkPointCandidate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">first_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint" title="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint"><span class="pre">AnalyzedTrkPoint</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.add_candidate">
+<span class="sig-name descname"><span class="pre">add_candidate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint" title="src.geo_objects.geo_points.analyzed_geo_points.AnalyzedTrkPoint"><span class="pre">AnalyzedTrkPoint</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.add_candidate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.calculate_time_spend">
+<span class="sig-name descname"><span class="pre">calculate_time_spend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_point</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.calculate_time_spend" title="Link to this definition"></a></dt>
+<dd><p>Calculating time spend across starting point to input_point timestamp
+:param input_point: AnalyzedTrkPoint
+:return: seconds</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.flush_to_rest_seed">
+<span class="sig-name descname"><span class="pre">flush_to_rest_seed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.flush_to_rest_seed" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_elev">
+<span class="sig-name descname"><span class="pre">get_average_elev</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_elev" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_lat">
+<span class="sig-name descname"><span class="pre">get_average_lat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_lat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_lon">
+<span class="sig-name descname"><span class="pre">get_average_lon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_average_lon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_point_count">
+<span class="sig-name descname"><span class="pre">get_point_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_point_count" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_start_time">
+<span class="sig-name descname"><span class="pre">get_start_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">datetime</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_start_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_delta_x">
+<span class="sig-name descname"><span class="pre">get_tot_delta_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_delta_x" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_delta_y">
+<span class="sig-name descname"><span class="pre">get_tot_delta_y</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_delta_y" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_time_spend">
+<span class="sig-name descname"><span class="pre">get_tot_time_spend</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.RestTrkPointCandidate.get_tot_time_spend" title="Link to this definition"></a></dt>
+<dd><p>provided total time spend from start point to last point
+:return: float time in second</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geo_objects.geo_points.analyzed_geo_points.</span></span><span class="sig-name descname"><span class="pre">SeedRestPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elev</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.elev">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">elev</span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.elev" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.lat">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lat</span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.lat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.lon">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lon</span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.lon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.start_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_time</span></span><a class="headerlink" href="#src.geo_objects.geo_points.analyzed_geo_points.SeedRestPoint.start_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.geo_objects.geo_points.basic_point">
+<span id="src-geo-objects-geo-points-basic-point-module"></span><h2>src.geo_objects.geo_points.basic_point module<a class="headerlink" href="#module-src.geo_objects.geo_points.basic_point" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.basic_point.BasicPoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geo_objects.geo_points.basic_point.</span></span><span class="sig-name descname"><span class="pre">BasicPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elev</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.basic_point.BasicPoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Basic point object provide a template for all other types of geography gps point to save point</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.basic_point.BasicPoint.elev">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">elev</span></span><a class="headerlink" href="#src.geo_objects.geo_points.basic_point.BasicPoint.elev" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.basic_point.BasicPoint.is_empty">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_empty</span></span><a class="headerlink" href="#src.geo_objects.geo_points.basic_point.BasicPoint.is_empty" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.basic_point.BasicPoint.lat">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lat</span></span><a class="headerlink" href="#src.geo_objects.geo_points.basic_point.BasicPoint.lat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.basic_point.BasicPoint.lon">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lon</span></span><a class="headerlink" href="#src.geo_objects.geo_points.basic_point.BasicPoint.lon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.basic_point.BasicPoint.time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><a class="headerlink" href="#src.geo_objects.geo_points.basic_point.BasicPoint.time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.geo_objects.geo_points.raw_geo_points">
+<span id="src-geo-objects-geo-points-raw-geo-points-module"></span><h2>src.geo_objects.geo_points.raw_geo_points module<a class="headerlink" href="#module-src.geo_objects.geo_points.raw_geo_points" title="Link to this heading"></a></h2>
+<p>This module contains the model of raw track point and way point which is getting from gpx file.
+The basic information of a point is time, latitude, longitude, elevation.
+for waypoint, addition point information is note.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.raw_geo_points.RawTrkPoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geo_objects.geo_points.raw_geo_points.</span></span><span class="sig-name descname"><span class="pre">RawTrkPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.raw_geo_points.RawTrkPoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint" title="src.geo_objects.geo_points.basic_point.BasicPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicPoint</span></code></a></p>
+<p>Raw track point object is the model to save track point
+row information which extracting directory from gpx file.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.raw_geo_points.WayPoint">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.geo_objects.geo_points.raw_geo_points.</span></span><span class="sig-name descname"><span class="pre">WayPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.raw_geo_points.WayPoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.geo_objects.geo_points.basic_point.BasicPoint" title="src.geo_objects.geo_points.basic_point.BasicPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasicPoint</span></code></a></p>
+<p>Way point object is the model to save waypoint
+row information which extracting directory from gpx file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.geo_objects.geo_points.raw_geo_points.WayPoint.get_note">
+<span class="sig-name descname"><span class="pre">get_note</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.geo_objects.geo_points.raw_geo_points.WayPoint.get_note" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.geo_objects.geo_points">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.geo_objects.geo_points" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Pen Hsuan Wang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
