@@ -76,6 +76,16 @@
              
   <section id="welcome-to-geo-hiking-track-s-documentation">
 <h1>Welcome to Geo Hiking Track’s documentation!<a class="headerlink" href="#welcome-to-geo-hiking-track-s-documentation" title="Link to this heading"></a></h1>
+<p>The Geo Hiking Track Analyzer’s Web API is a Python-based API designed for handling and analyzing geographic data, specifically GPS track points and waypoints. It provides a comprehensive framework for working with this data, including their time, latitude, longitude, and elevation.</p>
+<p>This API is built around several key packages:</p>
+<ol class="arabic simple">
+<li><p><cite>geo_object/geo_point</cite>: This package contains modules that define various classes for handling and manipulating geographic data. It includes classes like <cite>BasicPoint</cite>, <cite>WayPoint</cite>, <cite>RawTrkPoint</cite>, and others. These classes represent different types of geographic GPS points and provide methods for manipulating and analyzing these points.</p></li>
+<li><p><cite>geo_object/geo_tracks</cite>: This package contains modules that define various classes for handling and manipulating geographic track data. It includes classes like <cite>BasicTracks</cite>, <cite>RawTracks</cite>, <cite>RawTrackObject</cite>, and others. These classes represent different types of geographic tracks and provide methods for adding track points, getting track points, and calculating total time spent.</p></li>
+<li><p><cite>geoanalyzer/tracks</cite>: This package contains modules that provide functionalities for analyzing geographic track data. It includes classes like <cite>TrackAnalyzer</cite> and <cite>GpxParser</cite>. The <cite>TrackAnalyzer</cite> class is responsible for analyzing raw track data, smoothing the track data, performing analysis, and identifying rest points. The <cite>GpxParser</cite> class is used for extracting data from GPX files.</p></li>
+<li><p><cite>visualization/map_drawer</cite>: This module is responsible for creating interactive maps using the Folium library. It contains the <cite>FoliumMapDrawer</cite> class which provides an easy-to-use interface for drawing geographic data on a map.</p></li>
+</ol>
+<p>The project follows a typical Object-Oriented Programming (OOP) design, with classes representing different entities (like points and tracks) and their behaviors. The use of inheritance helps to reduce code duplication and makes the code easier to understand and maintain.</p>
+<p>The project also follows good coding practices such as using docstrings for documentation, raising exceptions for error handling, and using type hints for function parameters and return types. This makes the code more robust and easier to work with.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>

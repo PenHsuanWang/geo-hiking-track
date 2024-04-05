@@ -98,25 +98,74 @@
 <dt class="sig sig-object py" id="src.visualizartion.map_drawer.FoliumMapDrawer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.visualizartion.map_drawer.</span></span><span class="sig-name descname"><span class="pre">FoliumMapDrawer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location_x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">location_y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.visualizartion.map_drawer.FoliumMapDrawer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class used to represent a Map Drawer using the Folium library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>location_x</strong> (<em>float</em>) – The latitude of the location where the map will be centered</p></li>
+<li><p><strong>location_y</strong> (<em>float</em>) – The longitude of the location where the map will be centered</p></li>
+<li><p><strong>zoom_start</strong> (<em>int</em><em>, </em><em>optional</em>) – The initial zoom level of the map, defaults to 16</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.visualizartion.map_drawer.FoliumMapDrawer.add_poly_line">
 <span class="sig-name descname"><span class="pre">add_poly_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.visualizartion.map_drawer.FoliumMapDrawer.add_poly_line" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Adds a polyline to the map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point_list</strong> (<em>list</em>) – A list of points defining the polyline</p></li>
+<li><p><strong>weight</strong> (<em>int</em><em>, </em><em>optional</em>) – The weight of the polyline, defaults to 8</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) – The color of the polyline, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.visualizartion.map_drawer.FoliumMapDrawer.add_tracks">
 <span class="sig-name descname"><span class="pre">add_tracks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tracks</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.visualizartion.map_drawer.FoliumMapDrawer.add_tracks" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Adds tracks to the map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_tracks</strong> (<em>object</em>) – An object that represents geographic tracks</p></li>
+<li><p><strong>**kwargs</strong> – <p>Additional keyword arguments for the polyline</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.visualizartion.map_drawer.FoliumMapDrawer.draw_points_on_map">
 <span class="sig-name descname"><span class="pre">draw_points_on_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'marker'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'green'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.visualizartion.map_drawer.FoliumMapDrawer.draw_points_on_map" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Draws points on the map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>points</strong> (<em>list</em>) – A list of points to be drawn on the map</p></li>
+<li><p><strong>point_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The type of the points (‘marker’ or ‘circle’), defaults to ‘marker’</p></li>
+<li><p><strong>point_info</strong> (<em>str</em><em>, </em><em>optional</em>) – Additional information about the points, defaults to ‘’</p></li>
+<li><p><strong>point_color</strong> (<em>str</em><em>, </em><em>optional</em>) – The color of the points, defaults to ‘green’</p></li>
+<li><p><strong>point_radius</strong> (<em>int</em><em>, </em><em>optional</em>) – The radius of the points (if point_type is ‘circle’), defaults to 8</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – The opacity of the points (if point_type is ‘circle’), defaults to 0.3</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.visualizartion.map_drawer.FoliumMapDrawer.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#src.visualizartion.map_drawer.FoliumMapDrawer.save" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Saves the map to a specified file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>out_file</strong> (<em>str</em>) – The path of the file where the map will be saved</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
