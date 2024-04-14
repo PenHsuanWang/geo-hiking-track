@@ -189,3 +189,27 @@ map_drawer.save(out_file='output_map.html')
 
 This will create a map with a polyline and points, and save it to 'output_map.html'.
 
+## Docker
+
+This project includes a `Dockerfile` that allows you to build a Docker image of the Geo Hiking Track Analyzer. Docker is a platform that allows you to develop, ship, and run applications inside containers. A Docker image is a lightweight, standalone, executable package that includes everything needed to run a piece of software, including the code, a runtime, libraries, environment variables, and config files.
+
+Here's how to build the Docker image:
+
+1. Ensure that you have Docker installed on your machine. If not, you can download and install Docker from the [official website](https://www.docker.com/get-started).
+
+2. Open a terminal and navigate to the root directory of the project.
+
+3. Run the following command to build the Docker image:
+
+    ```bash
+    docker build -t geo-analyzer:0.1.0 .
+    ```
+
+    This command tells Docker to build an image using the `Dockerfile` in the current directory (`.`) and tag the image with the name `geo-analyzer` and version `0.1.0`.
+
+## Running the Docker Image
+
+Once you have built the Docker image, you can run the Geo Hiking Track Analyzer inside a Docker container using the following command:
+
+```bash
+docker run -it --rm -v ${PWD}/data/:/app/data -v ${PWD}/output/:/app/output geo-analyzer:0.1.0 --gpx-file /app/data/2021-08-29-06.21.16.gpx --output-map /app/output/text_map
