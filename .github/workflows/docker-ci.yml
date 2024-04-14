@@ -1,0 +1,20 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ dev, master ]
+
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t geo-analyzer:0.1.0 .
+
+      - name: Run Docker image
+        run: docker run --rm geo-analyzer:0.1.0 --help
