@@ -1,5 +1,9 @@
 # Geo Hiking Track Analyzer
 
+[![Python CI](https://github.com/PenHsuanWang/geo-hiking-track/actions/workflows/ci.yml/badge.svg)](https://github.com/PenHsuanWang/geo-hiking-track/actions/workflows/ci.yml)
+[![Docker CI](https://github.com/PenHsuanWang/geo-hiking-track/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/PenHsuanWang/geo-hiking-track/actions/workflows/docker-ci.yml)
+
+
 This Python-based project is designed for handling and analyzing geographic data, specifically GPS track points and waypoints. It provides a comprehensive framework for working with this data, including their time, latitude, longitude, and elevation.
 
 ## Usage
