@@ -149,3 +149,43 @@ The process of finding rest points involves the following steps:
 3. **RestTrkPoint Creation**: Once a SeedPoint is found, the function creates a RestTrkPoint. A RestTrkPoint represents a confirmed rest point and includes information such as location (latitude, longitude, elevation) and time (start time, end time). The location of the RestTrkPoint is taken from the SeedPoint's location. The RestTrkPoint collection is completed when the last point is more than 20 meters away from the SeedPoint location and the moving speed is greater than 0.1.
 
 The function returns a list of RestTrkPoints, representing all the rest points identified from the input list of track points.
+
+## map_drawer
+
+The `map_drawer` module is part of the visualization package and is responsible for creating interactive maps using the Folium library. It contains the `FoliumMapDrawer` class which provides an easy-to-use interface for drawing geographic data on a map.
+
+Here are the main functions of the `FoliumMapDrawer` class:
+
+- `__init__(self, location_x, location_y, zoom_start=16)`: Initializes a new Folium map centered at the given location (`location_x`, `location_y`) with the specified zoom level (`zoom_start`).
+
+- `add_poly_line(self, point_list, weight=8, color=None)`: Adds a polyline to the map. The polyline is defined by a list of points (`point_list`), and the line's weight and color can be customized.
+
+- `add_tracks(self, input_tracks, **kwargs)`: Adds tracks to the map. The tracks are defined by `input_tracks`, which is an instance of a class that represents geographic tracks.
+
+- `draw_points_on_map(self, points, point_type='marker', point_info='', point_color='green', point_radius=8, alpha=0.3)`: Draws points on the map. The points can be of type 'marker' or 'circle'. Additional information about the points (`point_info`), their color (`point_color`), radius (`point_radius`), and opacity (`alpha`) can be customized.
+
+- `save(self, out_file: str)`: Saves the map to a specified file (`out_file`).
+
+Here's an example of how to use the `FoliumMapDrawer` class:
+
+```python
+from src.visualization.map_drawer import FoliumMapDrawer
+
+# Initialize a new map centered at the given location with the specified zoom level
+map_drawer = FoliumMapDrawer(location_x=37.7749, location_y=-122.4194, zoom_start=12)
+
+# Add a polyline to the map
+map_drawer.add_poly_line(point_list=[[37.7749, -122.4194], [37.7599, -122.4148]])
+
+# Assume `tracks` is an instance of a class that represents geographic tracks
+map_drawer.add_tracks(input_tracks=tracks)
+
+# Draw points on the map
+map_drawer.draw_points_on_map(points=[[37.7749, -122.4194], [37.7599, -122.4148]])
+
+# Save the map to a specified file
+map_drawer.save(out_file='output_map.html')
+```
+
+This will create a map with a polyline and points, and save it to 'output_map.html'.
+
