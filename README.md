@@ -6,6 +6,10 @@
 
 This Python-based project is designed for handling and analyzing geographic data, specifically GPS track points and waypoints. It provides a comprehensive framework for working with this data, including their time, latitude, longitude, and elevation.
 
+### Output Map after Analyzing the GPX File showing the tracks, rest points, and waypoints
+![Extract Rest Point](https://i.imgur.com/8W6tv8F.png)
+![extract waypoint](https://i.imgur.com/jnBkD1a.png)
+
 ## Usage
 
 To use the `cli.py` script, you need to provide the path to the GPX file you want to load and the directory where you want to save the output map. You can do this using the `--gpx-file` and `--output-map` options, respectively.

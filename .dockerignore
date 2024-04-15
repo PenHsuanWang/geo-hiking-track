@@ -1,0 +1,14 @@
+# Exclude version control system directories
+.git
+.gitignore
+
+# Exclude Python bytecode files
+*.pyc
+
+# Exclude virtual environment directory
+venv/
+
+# Exclude any local development or temporary files
+__pycache__
+.env
+*.log
