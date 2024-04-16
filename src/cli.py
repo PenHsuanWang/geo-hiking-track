@@ -13,7 +13,10 @@ from src.visualizartion.map_drawer import FoliumMapDrawer
 @click.command()
 @click.option('--gpx-file', type=click.Path(exists=True), required=True, help='Path to the GPX file to load.')
 @click.option('--output-map', type=click.Path(), required=True, help='Directory to save the output map.')
-def main(gpx_file, output_map):
+@click.option('--map-tile', type=str, required=False, default='OpenStreetMap', help='The map tile provider to use.')
+@click.option('--map-attr', type=str, required=False,
+              default='Map data © OpenStreetMap contributors', help='The attribution of the map.')
+def main(gpx_file, output_map, map_tile, map_attr):
     """CLI tool for parsing GPX files and generating maps."""
 
     try:
@@ -27,7 +30,9 @@ def main(gpx_file, output_map):
         # Generating map
         map_drawer = FoliumMapDrawer(
             tracks.get_start_point().lat,
-            tracks.get_start_point().lon
+            tracks.get_start_point().lon,
+            map_tiles=map_tile,
+            map_attr=map_attr
         )
         map_drawer.add_tracks(tracks, weight=4)
         map_drawer.draw_points_on_map(

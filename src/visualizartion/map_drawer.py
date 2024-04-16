@@ -14,10 +14,13 @@ class FoliumMapDrawer:
     :type zoom_start: int, optional
     """
 
-    def __init__(self, location_x, location_y, zoom_start=16):
+    def __init__(self, location_x, location_y, zoom_start=16, **kwargs):
 
-        self.fmap = folium.Map(location=[location_x, location_y], zoom_start=zoom_start)
-        folium.TileLayer('openstreetmap').add_to(self.fmap)
+        map_tiles = kwargs.get('map_tiles', 'openstreetmap')
+        map_attr = kwargs.get('map_attr', 'Warning: No attribution specified. please set the attr by --map-attr option.')
+
+        self.fmap = folium.Map(location=[location_x, location_y], zoom_start=zoom_start, tiles=map_tiles, attr=map_attr)
+        # folium.TileLayer(map_tiles).add_to(self.fmap)
 
     def add_poly_line(self, point_list, weight=8, color=None):
         """
