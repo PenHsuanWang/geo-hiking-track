@@ -7,20 +7,37 @@
 This Python-based project is designed for handling and analyzing geographic data, specifically GPS track points and waypoints. It provides a comprehensive framework for working with this data, including their time, latitude, longitude, and elevation.
 
 ### Output Map after Analyzing the GPX File showing the tracks, rest points, and waypoints
-![Extract Rest Point](https://i.imgur.com/8W6tv8F.png)
-![extract waypoint](https://i.imgur.com/jnBkD1a.png)
+![Extract Rest Point](https://i.imgur.com/2D9vuSp.png)
+![extract waypoint](https://i.imgur.com/zEc8DBV.png)
 
 ## Usage
 
 To use the `cli.py` script, you need to provide the path to the GPX file you want to load and the directory where you want to save the output map. You can do this using the `--gpx-file` and `--output-map` options, respectively.
 
+Additionally, you can specify the map tile provider and the attribution of the map using the `--map-tile` and `--map-attr` options. If not provided, these options default to 'OpenStreetMap' and 'Map data © OpenStreetMap contributors', respectively.
+
 Here's an example of how to use the `cli.py` script:
 
 ```bash
-python cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory
+python cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --map-tile 'OpenStreetMap' --map-attr 'Map data © OpenStreetMap contributors'
 ```
-This command will parse the GPX file, analyze the tracks, generate a map with the tracks, rest points, and waypoints, and save the map to the specified output directory.  Please ensure that the GPX file exists and the output directory is writable before running the command.
-Please replace `/path/to/your/gpx/file` and `/path/to/output/directory` with the actual paths to your GPX file and output directory, respectively.
+
+::: tip
+:bulb:
+Providing correct map attribution is crucial for legal compliance, acknowledging data providers' efforts, ensuring transparency about data sources, and meeting the requirements of mapping libraries like Folium.
+:::
+
+This command will parse the GPX file, analyze the tracks, generate a map with the tracks, rest points, and waypoints, and save the map to the specified output directory. Please ensure that the GPX file exists and the output directory is writable before running the command.  Please replace /path/to/your/gpx/file and /path/to/output/directory with the actual paths to your GPX file and output directory, respectively. If you want to use a different map tile provider or attribution, replace 'OpenStreetMap' and 'Map data © OpenStreetMap contributors' with your desired values.
+
+### Flexible map tile 
+Setting the map tile by url is available. For example, the Rudy map for Taiwan is support by `--map-tile 'https://tile.happyman.idv.tw/map/moi_osm/{z}/{x}/{y}.png'` for black/white version
+
+![Rudymap black and white version](https://i.imgur.com/AaEFngY.png)
+
+or `--map-tile 'https://tile.happyman.idv.tw/map/rudy/{z}/{x}/{y}.png'` for colorful version
+
+![Rudymap colorful version](https://i.imgur.com/FCu9i9M.png)
+
 
 ## Developer
 
