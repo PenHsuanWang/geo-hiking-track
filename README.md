@@ -38,6 +38,13 @@ or `--map-tile 'https://tile.happyman.idv.tw/map/rudy/{z}/{x}/{y}.png'` for colo
 
 ![Rudymap colorful version](https://i.imgur.com/FCu9i9M.png)
 
+or `--map-tile 'https://gis.sinica.edu.tw/tileserver/file-exists.php?img=JM50K_1924_new-png-{z}-{x}-{y}'`
+
+日治五萬分之一地形圖(陸地測量部) |  臺灣經建3版地形圖
+:-------------------------:|:-------------------------:
+![historical trail map](https://i.imgur.com/Du5iS9t.jpg) | ![historical trail map 2](https://i.imgur.com/1iiYYwn.jpg) 
+
+More tiles can be found in [Academic Sinica GIS WMTS Services](http://gis.sinica.edu.tw/tileserver/)
 
 ## Developer
 
