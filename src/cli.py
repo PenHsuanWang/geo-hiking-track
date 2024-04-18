@@ -8,6 +8,7 @@ import click
 from src.geoanalyzer.tracks import gps_parser
 from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
 from src.visualizartion.map_drawer import FoliumMapDrawer
+from src.visualizartion.report_generator import ReportGenerator
 
 
 @click.command()
@@ -26,6 +27,11 @@ def main(gpx_file, output_map, map_tile, map_attr):
         # Analyzing tracks
         tracks_object = TrackAnalyzer(gpx_parser_obj.get_raw_track_object())
         tracks = tracks_object.get_main_track()
+        waypoints = tracks_object.get_waypoint_list()
+
+        # Generate report
+        reporter = ReportGenerator(tracks_object)
+        reporter.generate_report(saved_file='default_report.txt', saved_format='txt')
 
         # Generating map
         map_drawer = FoliumMapDrawer(
