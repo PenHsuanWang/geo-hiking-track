@@ -10,7 +10,7 @@ This Python-based project is designed for handling and analyzing geographic data
 ![Extract Rest Point](https://i.imgur.com/2D9vuSp.png)
 ![extract waypoint](https://i.imgur.com/zEc8DBV.png)
 
-## Usage
+## Usage of CLI Tool
 
 To use the `cli.py` script, you need to provide the path to the GPX file you want to load and the directory where you want to save the output map. You can do this using the `--gpx-file` and `--output-map` options, respectively.
 

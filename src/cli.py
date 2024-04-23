@@ -17,7 +17,8 @@ from src.visualizartion.report_generator import ReportGenerator
 @click.option('--map-tile', type=str, required=False, default='OpenStreetMap', help='The map tile provider to use.')
 @click.option('--map-attr', type=str, required=False,
               default='Map data © OpenStreetMap contributors', help='The attribution of the map.')
-def main(gpx_file, output_map, map_tile, map_attr):
+@click.option('--output-report', type=click.Path(), required=False, help='Directory to save the output report.')
+def main(gpx_file, output_map, map_tile, map_attr, output_report):
     """CLI tool for parsing GPX files and generating maps."""
 
     try:
@@ -29,9 +30,10 @@ def main(gpx_file, output_map, map_tile, map_attr):
         tracks = tracks_object.get_main_track()
         waypoints = tracks_object.get_waypoint_list()
 
-        # Generate report
-        reporter = ReportGenerator(tracks_object)
-        reporter.generate_report(saved_file='default_report.txt', saved_format='txt')
+        # if provided output report with expose file directory, saving output report in txt file format
+        if output_report:
+            reporter = ReportGenerator(tracks_object)
+            reporter.generate_report(saved_file='default_report.txt', saved_format='txt')
 
         # Generating map
         map_drawer = FoliumMapDrawer(
