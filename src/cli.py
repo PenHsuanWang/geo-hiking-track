@@ -29,7 +29,6 @@ def main(gpx_file, output_map, map_tile, map_attr, output_report):
         # Analyzing tracks
         tracks_object = TrackAnalyzer(gpx_parser_obj.get_raw_track_object())
         tracks = tracks_object.get_main_track()
-        waypoints = tracks_object.get_waypoint_list()
 
         # if provided output report with expose file directory, saving output report in txt file format
         if output_report:

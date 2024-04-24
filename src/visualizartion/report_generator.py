@@ -22,13 +22,14 @@ class ReportGenerator:
         """
         self._track_object = track_object
 
-    def _parsing_waypoint_list(self) -> List[List]:
+    def _parsing_waypoint_list(self) -> List[List[str]]:
         """
         Parses a list of waypoint nodes and extracts the time and note.
 
         This method retrieves a list of waypoints from the track object and iterates over each waypoint.
         For each waypoint, it extracts the time and note and appends them as a list to the waypoint_time_note_dict list.
-        The method returns the waypoint_time_note_dict list, which is a list of lists, where each inner list contains the time and note of a waypoint.
+        The method returns the waypoint_time_note_dict list, which is a list of lists,
+        where each inner list contains the time and note of a waypoint.
 
         :return: A list of lists, where each inner list contains the time and note of a waypoint.
         :rtype: List[List]
@@ -79,4 +80,3 @@ class ReportGenerator:
             c.save()
 
         print(f"Report successfully generated at {saved_file}")
-

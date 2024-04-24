@@ -70,6 +70,9 @@ More tiles can be found in [Academic Sinica GIS WMTS Services](http://gis.sinica
 ### Report Generation
 The `cli.py` script also supports generating a report in HTML format. The report includes information about the tracks, rest points, and waypoints extracted from the GPX file. To generate a report, use the `--output-report` option followed by the directory where you want to save the report.
 
+![operation_of_generate_report](https://i.imgur.com/oM9n0Q9.png)
+
+![report_overview](https://i.imgur.com/zSFbgfe.png)
 
 ## Developer
 
