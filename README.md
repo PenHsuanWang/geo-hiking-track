@@ -19,8 +19,21 @@ Additionally, you can specify the map tile provider and the attribution of the m
 Here's an example of how to use the `cli.py` script:
 
 ```bash
-python cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --map-tile 'OpenStreetMap' --map-attr 'Map data © OpenStreetMap contributors'
+python cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory
 ```
+
+* Optional: If you want to generate a report, add the `--output-report` option followed by the directory where you want to save the output report:
+
+    ```bash
+    python src/cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --output-report /path/to/report/directory
+    ```
+
+    Replace `/path/to/report/directory` with the directory where you want to save the output report.
+* Optional: You can also specify the map tile provider and the attribution of the map using the `--map-tile` and `--map-attr` options. If not provided, these options default to 'OpenStreetMap' and 'Map data © OpenStreetMap contributors', respectively:
+
+    ```bash
+    python src/cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --map-tile 'OpenStreetMap' --map-attr 'Map data © OpenStreetMap contributors'
+    ```
 
 ::: tip
 :bulb:
@@ -53,6 +66,10 @@ i.e.
 ![historical trail map](https://i.imgur.com/Du5iS9t.jpg) | ![historical trail map 2](https://i.imgur.com/1iiYYwn.jpg) 
 
 More tiles can be found in [Academic Sinica GIS WMTS Services](http://gis.sinica.edu.tw/tileserver/)
+
+### Report Generation
+The `cli.py` script also supports generating a report in HTML format. The report includes information about the tracks, rest points, and waypoints extracted from the GPX file. To generate a report, use the `--output-report` option followed by the directory where you want to save the report.
+
 
 ## Developer
 
