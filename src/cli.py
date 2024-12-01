@@ -93,7 +93,7 @@ def main(gpx_file, output_map, map_tile, map_attr, output_report, picture_folder
             map_drawer.draw_points_on_map(
                 image_points,
                 point_type='marker',
-                point_info='Image',
+                point_info='',
                 point_color='red',
                 point_radius=None,
                 alpha=None

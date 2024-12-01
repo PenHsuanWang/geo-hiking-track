@@ -1,5 +1,6 @@
 import os
 import datetime
+import json
 from typing import List, Tuple
 from PIL import Image, ExifTags
 from src.geo_objects.geo_points.image_points import ImagePoint
@@ -13,12 +14,40 @@ class ImageParser:
 
     def __init__(self, image_folder: str):
         self._image_folder = image_folder
+        self._image_url_mapping = self._load_image_url_mapping()
         self._image_points: List[ImagePoint] = []
         self._processed_files = 0
         self._skipped_files_non_jpg = 0
         self._skipped_files_no_gps = 0
         self._errors = []
         self._parse_images()
+
+    def _load_image_url_mapping(self) -> dict:
+        """
+        Loads the image URL mapping from a JSON file.
+
+        :return: A dictionary mapping file names to image URLs.
+        """
+        mapping = {}
+        mapping_file = os.path.join(self._image_folder, 'picture_name_url_mapping.json')
+
+        if os.path.exists(mapping_file):
+            try:
+                with open(mapping_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    for item in data:
+                        file_name = item.get('filename')
+                        image_url = item.get('image_url')
+                        if file_name and image_url:
+                            mapping[file_name] = image_url
+                        else:
+                            print(f"Invalid entry in mapping file: {item}")
+            except json.JSONDecodeError as e:
+                print(f"Error decoding JSON mapping file: {e}")
+        else:
+            print("No image URL mapping file found in the picture folder.")
+
+        return mapping
 
     def _parse_images(self):
         """
@@ -78,9 +107,9 @@ class ImageParser:
             if lat is None or lon is None or not lat_ref or not lon_ref:
                 return None
 
-            if lat_ref in ['S', 'W']:
+            if lat_ref in ['S']:
                 lat = -lat
-            if lon_ref in ['S', 'W']:
+            if lon_ref in ['W']:
                 lon = -lon
 
             # Extract time and elevation if available
@@ -91,12 +120,17 @@ class ImageParser:
             if elev:
                 elev = self._convert_rational_to_float(elev)
 
+            file_name = os.path.basename(file_path)
+            image_url = self._image_url_mapping.get(file_name)
+
             return ImagePoint(
-                file_name=os.path.basename(file_path),
+                file_name=file_name,
                 time=time,
                 lat=lat,
                 lon=lon,
-                elev=elev
+                elev=elev,
+                image_url=image_url,
+                additional_info=None
             )
         except Exception as e:
             error_message = f"Error processing {file_path}: {e}"
