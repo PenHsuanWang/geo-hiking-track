@@ -25,6 +25,12 @@ class ImagePoint(BasicPoint):
     def additional_info(self):
         return self._additional_info
 
+    def get_note(self):
+        """
+        Returns additional info or file name as a note.
+        """
+        return self.additional_info or self.file_name
+
     def get_popup_info(self):
         """
         Returns formatted information for display in map popups.

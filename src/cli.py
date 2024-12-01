@@ -9,8 +9,8 @@ import os
 from src.geoanalyzer.tracks import gps_parser
 from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
 from src.geoanalyzer.images.image_parser import ImageParser
-from src.visualization.map_drawer import FoliumMapDrawer
-from src.visualization.report_generator import ReportGenerator
+from src.visualizartion.map_drawer import FoliumMapDrawer
+from src.visualizartion.report_generator import ReportGenerator
 
 @click.command()
 @click.option('--gpx-file', type=click.Path(exists=True), required=True, help='Path to the GPX file to load.')
@@ -36,6 +36,16 @@ def main(gpx_file, output_map, map_tile, map_attr, output_report, picture_folder
         if picture_folder:
             image_parser = ImageParser(picture_folder)
             image_points = image_parser.get_image_points()
+            processed_files, skipped_non_jpg, skipped_no_gps, errors = image_parser.get_summary()
+
+            # Display summary to the user
+            click.echo(f"Processed {processed_files} JPG files.")
+            click.echo(f"Skipped {skipped_non_jpg} non-JPG files.")
+            click.echo(f"Skipped {skipped_no_gps} JPG files without GPS data.")
+            if errors:
+                click.echo("Errors encountered during image parsing:")
+                for error in errors:
+                    click.echo(f"- {error}")
 
         # Report Generation (same as before)
         if output_report:
