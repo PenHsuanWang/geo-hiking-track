@@ -109,10 +109,18 @@ class FoliumMapDrawer:
                     )
 
             elif isinstance(i, ImagePoint):
-                # New logic for ImagePoint to display images from URLs
                 popup_html = i.get_popup_info()
-                iframe = folium.IFrame(html=popup_html, width=300, height=300)
-                popup = folium.Popup(iframe, max_width=500)
+                popup = folium.Popup(
+                    popup_html,
+                    max_width='none',  # Disable max width to allow percentage-based styling
+                    min_width='none',  # Disable min width
+                    parse_html=False,
+                    options={
+                        'autoPan': True,
+                        'keepInView': True,
+                        'autoPanPadding': [20, 20]
+                    }
+                )
 
                 # Use a custom icon for image points (e.g., a camera icon)
                 icon = folium.Icon(color=point_color, icon='camera', prefix='fa')  # Using Font Awesome icons

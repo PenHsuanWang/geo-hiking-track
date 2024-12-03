@@ -1,3 +1,5 @@
+# src/geo_objects/geo_points/image_points.py
+
 from src.geo_objects.geo_points.basic_point import BasicPoint
 
 class ImagePoint(BasicPoint):
@@ -41,12 +43,16 @@ class ImagePoint(BasicPoint):
         """
         Returns formatted information for display in map pop-ups, including the image if available.
         """
-        info = f"<strong>Image:</strong> {self._file_name}<br>"
+        html = '<div style="width: 50vw; height: auto; max-height: 70vh; overflow-y: auto; padding: 20px; box-sizing: border-box; font-size: 1.2rem;">'
+        html += '<strong style="font-size: 1.5rem; margin-bottom: 10px;">Image Details</strong><br>'
         if self.time:
-            info += f"<strong>Time:</strong> {self.time.strftime('%Y-%m-%d %H:%M:%S')}<br>"
+            html += f'<span style="display: block; margin-top: 10px;">Time: {self.time.strftime("%H:%M:%S")}</span>'
+        html += f'<span style="display: block; margin-top: 5px;">Filename: {self._file_name}</span>'
+        if self.elev:
+            html += f'<span style="display: block; margin-top: 5px;">Elevation: {round(self.elev, 1)} M</span>'
         if self._additional_info:
-            info += f"<strong>Info:</strong> {self._additional_info}<br>"
+            html += f'<span style="display: block; margin-top: 5px;">Info: {self._additional_info}</span>'
         if self._image_url:
-            # Include the image in the pop-up using HTML
-            info += f'<img src="{self._image_url}" alt="{self._file_name}" style="width:200px;"><br>'
-        return info
+            html += f'<img src="{self._image_url}" alt="{self._file_name}" style="width: 100%; max-width: 48vw; height: auto; border-radius: 10px; margin-top: 20px;">'
+        html += '</div>'
+        return html
