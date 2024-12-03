@@ -2,6 +2,7 @@
 
 from src.geo_objects.geo_points.basic_point import BasicPoint
 
+
 class ImagePoint(BasicPoint):
     """
     ImagePoint represents a geographic point extracted from an image's EXIF data.
@@ -16,6 +17,10 @@ class ImagePoint(BasicPoint):
     """
 
     def __init__(self, file_name, time, lat, lon, elev=None, image_url=None, additional_info=None):
+        if file_name is None:
+            raise TypeError("file_name cannot be None")
+        if not isinstance(file_name, str) or not file_name.strip():
+            raise ValueError("file_name must be a non-empty string")
         super().__init__(time, lat, lon, elev)
         self._file_name = file_name
         self._image_url = image_url
@@ -48,7 +53,7 @@ class ImagePoint(BasicPoint):
         if self.time:
             html += f'<span style="display: block; margin-top: 10px;">Time: {self.time.strftime("%H:%M:%S")}</span>'
         html += f'<span style="display: block; margin-top: 5px;">Filename: {self._file_name}</span>'
-        if self.elev:
+        if self.elev is not None:
             html += f'<span style="display: block; margin-top: 5px;">Elevation: {round(self.elev, 1)} M</span>'
         if self._additional_info:
             html += f'<span style="display: block; margin-top: 5px;">Info: {self._additional_info}</span>'

@@ -5,7 +5,11 @@ class BasicPoint:
     """
     Basic point object provide a template for all other types of geography gps point to save point
     """
-    def __init__(self, time, lat: Optional[float], lon: Optional[float], elev: Optional[float]):
+    def __init__(self, time, lat, lon, elev=None):
+        if lat is not None and not (-90 <= lat <= 90):
+            raise ValueError(f"Invalid latitude {lat}. Must be between -90 and 90 degrees.")
+        if lon is not None and not (-180 <= lon <= 180):
+            raise ValueError(f"Invalid longitude {lon}. Must be between -180 and 180 degrees.")
         """
         Initializes a BasicPoint object, provide the basic information of a point
         input the gps track point's time, latitude, longitude, elevation
