@@ -17,12 +17,15 @@ class FoliumMapDrawer:
     """
 
     def __init__(self, location_x, location_y, zoom_start=16, **kwargs):
-
         map_tiles = kwargs.get('map_tiles', 'openstreetmap')
         map_attr = kwargs.get('map_attr', 'Warning: No attribution specified. please set the attr by --map-attr option.')
 
-        self.fmap = folium.Map(location=[location_x, location_y], zoom_start=zoom_start, tiles=map_tiles, attr=map_attr)
-        # folium.TileLayer(map_tiles).add_to(self.fmap)
+        self.fmap = folium.Map(
+            location=[location_x, location_y],
+            zoom_start=zoom_start,
+            tiles=map_tiles,
+            attr=map_attr
+        )
 
     def add_poly_line(self, point_list, weight=8, color=None):
         """
@@ -35,6 +38,10 @@ class FoliumMapDrawer:
         :param color: The color of the polyline, defaults to None
         :type color: str, optional
         """
+        if not point_list:
+            # Skip adding PolyLine if the point list is empty
+            print("Warning: PolyLine point list is empty. Skipping addition.")
+            return
         self.fmap.add_child(folium.PolyLine(locations=point_list, weight=weight, color=color))
 
     def add_tracks(self, input_tracks, **kwargs):
@@ -48,8 +55,15 @@ class FoliumMapDrawer:
         main_tracks_point_list = input_tracks.get_main_tracks_points_list()
         point_list = []
         for i in main_tracks_point_list:
+            # Validate point attributes
+            if not isinstance(i.lat, (int, float)) or not isinstance(i.lon, (int, float)):
+                raise ValueError(f"Invalid latitude or longitude for track point: {i}")
             point = [i.lat, i.lon]
             point_list.append(point)
+        if not point_list:
+            # Skip adding PolyLine if the point list is empty
+            print("Warning: Track point list is empty. Skipping addition.")
+            return
         self.fmap.add_child(folium.PolyLine(locations=point_list, **kwargs))
 
     def draw_points_on_map(self, points, point_type='marker', point_info='', point_color='green', point_radius=8, alpha=0.3):
@@ -76,6 +90,14 @@ class FoliumMapDrawer:
             point_info += '<br>'
 
         for i in points:
+            # Validate point attributes
+            if not isinstance(i.lat, (int, float)) or not isinstance(i.lon, (int, float)):
+                raise ValueError(f"Invalid latitude or longitude for point: {i}")
+            if not hasattr(i.time, 'strftime'):
+                raise ValueError(f"Invalid time attribute for point: {i}")
+            if not isinstance(i.elev, (int, float)):
+                raise ValueError(f"Invalid elevation for point: {i}")
+
             point_location = [i.lat, i.lon]
 
             if isinstance(i, RestTrkPoint):
