@@ -5,6 +5,7 @@ from typing import List, Tuple
 from PIL import Image, ExifTags
 from src.geo_objects.geo_points.image_points import ImagePoint
 
+
 class ImageParser:
     """
     Parses images in a directory to extract GPS data.
@@ -114,7 +115,13 @@ class ImageParser:
 
             # Extract time and elevation if available
             time_str = exif.get('DateTimeOriginal') or exif.get('DateTime')
-            time = datetime.datetime.strptime(time_str, '%Y:%m:%d %H:%M:%S') if time_str else None
+            time = None
+            if time_str:
+                try:
+                    time = datetime.datetime.strptime(time_str, '%Y:%m:%d %H:%M:%S')
+                except ValueError:
+                    print(f"Invalid date/time format in {file_path}: {time_str}")
+                    # time remains None
 
             elev = gps_data.get('GPSAltitude')
             if elev:
