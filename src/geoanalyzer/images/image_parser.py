@@ -76,7 +76,7 @@ class ImageParser:
         """
         try:
             image = Image.open(file_path)
-            exif_data = image._getexif()
+            exif_data = image._getexif()  # type:ignore[attr-defined]
             if not exif_data:
                 return None
 
