@@ -12,6 +12,7 @@ from src.geoanalyzer.images.image_parser import ImageParser
 from src.visualizartion.map_drawer import FoliumMapDrawer
 from src.visualizartion.report_generator import ReportGenerator
 
+
 @click.command()
 @click.option('--gpx-file', type=click.Path(exists=True), required=True, help='Path to the GPX file to load.')
 @click.option('--output-map', type=click.Path(), required=True, help='Directory to save the output map.')

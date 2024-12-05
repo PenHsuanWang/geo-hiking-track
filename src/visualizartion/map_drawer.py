@@ -4,6 +4,7 @@ import folium
 from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
 from src.geo_objects.geo_points.image_points import ImagePoint
 
+
 class FoliumMapDrawer:
     """
     A class used to represent a Map Drawer using the Folium library.
