@@ -8,6 +8,7 @@ import click
 import os
 from src.geoanalyzer.tracks import gps_parser
 from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
+from src.geoanalyzer.images.image_parser import ImageParser
 from src.visualizartion.map_drawer import FoliumMapDrawer
 from src.visualizartion.report_generator import ReportGenerator
 
@@ -19,7 +20,8 @@ from src.visualizartion.report_generator import ReportGenerator
 @click.option('--map-attr', type=str, required=False,
               default='Map data © OpenStreetMap contributors', help='The attribution of the map.')
 @click.option('--output-report', type=click.Path(), required=False, help='Directory to save the output report.')
-def main(gpx_file, output_map, map_tile, map_attr, output_report):
+@click.option('--picture-folder', type=click.Path(exists=True), required=False, help='Folder containing pictures to parse.')
+def main(gpx_file, output_map, map_tile, map_attr, output_report, picture_folder):
     """CLI tool for parsing GPX files and generating maps."""
 
     try:
@@ -30,7 +32,23 @@ def main(gpx_file, output_map, map_tile, map_attr, output_report):
         tracks_object = TrackAnalyzer(gpx_parser_obj.get_raw_track_object())
         tracks = tracks_object.get_main_track()
 
-        # if provided output report with expose file directory, saving output report in txt file format
+        # If provided, parse images and get image points
+        image_points = []
+        if picture_folder:
+            image_parser = ImageParser(picture_folder)
+            image_points = image_parser.get_image_points()
+            processed_files, skipped_non_jpg, skipped_no_gps, errors = image_parser.get_summary()
+
+            # Display summary to the user
+            click.echo(f"Processed {processed_files} JPG files.")
+            click.echo(f"Skipped {skipped_non_jpg} non-JPG files.")
+            click.echo(f"Skipped {skipped_no_gps} JPG files without GPS data.")
+            if errors:
+                click.echo("Errors encountered during image parsing:")
+                for error in errors:
+                    click.echo(f"- {error}")
+
+        # Report Generation (same as before)
         if output_report:
             # check the file extension name exist and support txt format and other relevant format like markdown
             # check  the output_report file path is valid
@@ -71,6 +89,16 @@ def main(gpx_file, output_map, map_tile, map_attr, output_report):
             point_radius=None,
             alpha=None
         )
+        # Add image points to the map
+        if image_points:
+            map_drawer.draw_points_on_map(
+                image_points,
+                point_type='marker',
+                point_info='',
+                point_color='red',
+                point_radius=None,
+                alpha=None
+            )
         map_drawer.save(output_map)
 
         click.echo(f"Map successfully generated at {output_map}")
