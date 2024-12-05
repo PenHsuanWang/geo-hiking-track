@@ -17,9 +17,9 @@ class ImageParser:
         self._image_folder = image_folder
         self._image_url_mapping = self._load_image_url_mapping()
         self._image_points: List[ImagePoint] = []
-        self._processed_files = 0
-        self._skipped_files_non_jpg = 0
-        self._skipped_files_no_gps = 0
+        self._processed_files: int = 0
+        self._skipped_files_non_jpg: int = 0
+        self._skipped_files_no_gps: int = 0
         self._errors: List[str] = []
         self._parse_images()
 
@@ -80,7 +80,7 @@ class ImageParser:
             if not exif_data:
                 return None
 
-            exif = {}
+            exif: Dict[str, Any] = {}
             for tag, value in exif_data.items():
                 decoded_tag = ExifTags.TAGS.get(tag, tag)
                 exif[decoded_tag] = value
@@ -89,7 +89,7 @@ class ImageParser:
             if not gps_info:
                 return None
 
-            gps_data = {}
+            gps_data: Dict[str, Any] = {}
             for key in gps_info.keys():
                 decoded_key = ExifTags.GPSTAGS.get(key, key)
                 gps_data[decoded_key] = gps_info[key]
@@ -115,7 +115,7 @@ class ImageParser:
 
             # Extract time and elevation if available
             time_str = exif.get('DateTimeOriginal') or exif.get('DateTime')
-            time = None
+            time: Optional[datetime.datetime] = None
             if time_str:
                 try:
                     time = datetime.datetime.strptime(time_str, '%Y:%m:%d %H:%M:%S')
@@ -160,6 +160,9 @@ class ImageParser:
             m = self._convert_rational_to_float(value[1])
             s = self._convert_rational_to_float(value[2])
 
+            if d is None or m is None or s is None:
+                return None
+
             result = d + (m / 60.0) + (s / 3600.0)
             return result
         except Exception as e:
@@ -174,9 +177,9 @@ class ImageParser:
         :return: The float representation of the rational number.
         """
         try:
-            if isinstance(rational, int) or isinstance(rational, float):
+            if isinstance(rational, (int, float)):
                 return float(rational)
-            elif isinstance(rational, tuple):
+            elif isinstance(rational, tuple) and len(rational) == 2:
                 return rational[0] / rational[1]
             else:
                 return float(rational)
