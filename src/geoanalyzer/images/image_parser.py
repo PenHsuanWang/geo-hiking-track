@@ -1,7 +1,7 @@
 import os
 import datetime
 import json
-from typing import List, Tuple
+from typing import List, Tuple, Dict, Optional, Any
 from PIL import Image, ExifTags
 from src.geo_objects.geo_points.image_points import ImagePoint
 
@@ -20,16 +20,16 @@ class ImageParser:
         self._processed_files = 0
         self._skipped_files_non_jpg = 0
         self._skipped_files_no_gps = 0
-        self._errors = []
+        self._errors: List[str] = []
         self._parse_images()
 
-    def _load_image_url_mapping(self) -> dict:
+    def _load_image_url_mapping(self) -> Dict[str, str]:
         """
         Loads the image URL mapping from a JSON file.
 
         :return: A dictionary mapping file names to image URLs.
         """
-        mapping = {}
+        mapping: Dict[str, str] = {}
         mapping_file = os.path.join(self._image_folder, 'picture_name_url_mapping.json')
 
         if os.path.exists(mapping_file):
@@ -67,7 +67,7 @@ class ImageParser:
                 else:
                     self._skipped_files_non_jpg += 1
 
-    def _extract_gps_data(self, file_path: str) -> ImagePoint:
+    def _extract_gps_data(self, file_path: str) -> Optional[ImagePoint]:
         """
         Extracts GPS data from an image file.
 
@@ -145,7 +145,7 @@ class ImageParser:
             print(error_message)
             return None
 
-    def _convert_to_degrees(self, value):
+    def _convert_to_degrees(self, value: Optional[Tuple[Any, Any, Any]]) -> Optional[float]:
         """
         Helper function to convert GPS coordinates to degrees.
 
@@ -166,7 +166,7 @@ class ImageParser:
             print(f"Error converting to degrees: {e}")
             return None
 
-    def _convert_rational_to_float(self, rational):
+    def _convert_rational_to_float(self, rational: Any) -> Optional[float]:
         """
         Convert a rational number to float.
 
