@@ -1,9 +1,9 @@
 # src/visualization/map_drawer.py
 
 import folium
+from folium import Map, TileLayer, LayerControl
 from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
 from src.geo_objects.geo_points.image_points import ImagePoint
-
 
 class FoliumMapDrawer:
     """
@@ -18,15 +18,33 @@ class FoliumMapDrawer:
     """
 
     def __init__(self, location_x, location_y, zoom_start=16, **kwargs):
-        map_tiles = kwargs.get('map_tiles', 'openstreetmap')
-        map_attr = kwargs.get('map_attr', 'Warning: No attribution specified. please set the attr by --map-attr option.')
+        map_tiles = kwargs.get('map_tiles', ['openstreetmap'])
+        map_attrs = kwargs.get('map_attrs', ['Warning: No attribution specified. Please set the attr by --map-attr option.'])
 
-        self.fmap = folium.Map(
+        if len(map_tiles) != len(map_attrs):
+            raise ValueError("The number of map_tiles and map_attrs must be the same.")
+
+        # Initialize the map without default tiles
+        self.fmap = Map(
             location=[location_x, location_y],
             zoom_start=zoom_start,
-            tiles=map_tiles,
-            attr=map_attr
+            tiles=None  # We'll add tile layers manually
         )
+
+        # Add each tile layer
+        self.tile_layers = []
+        for tile, attr in zip(map_tiles, map_attrs):
+            if tile.lower() in ['openstreetmap', 'stamenterrain', 'stamenwatercolor', 'cartodbpositron', 'cartodbdark_matter']:
+                # For built-in tile providers
+                tile_layer = TileLayer(tile, name=tile, attr=attr, control=True)
+            else:
+                # For custom tile URLs
+                tile_layer = TileLayer(tiles=tile, name=tile, attr=attr, control=True)
+            tile_layer.add_to(self.fmap)
+            self.tile_layers.append(tile_layer)
+
+        # Add LayerControl to switch between tile layers
+        LayerControl().add_to(self.fmap)
 
     def add_poly_line(self, point_list, weight=8, color=None):
         """
@@ -62,7 +80,6 @@ class FoliumMapDrawer:
             point = [i.lat, i.lon]
             point_list.append(point)
         if not point_list:
-            # Skip adding PolyLine if the point list is empty
             print("Warning: Track point list is empty. Skipping addition.")
             return
         self.fmap.add_child(folium.PolyLine(locations=point_list, **kwargs))
@@ -146,7 +163,7 @@ class FoliumMapDrawer:
                 )
 
                 # Use a custom icon for image points (e.g., a camera icon)
-                icon = folium.Icon(color=point_color, icon='camera', prefix='fa')  # Using Font Awesome icons
+                icon = folium.Icon(color=point_color, icon='camera', prefix='fa')
 
                 self.fmap.add_child(
                     folium.Marker(
