@@ -1,9 +1,10 @@
 # src/visualization/map_drawer.py
 
 import folium
-from folium import Map, TileLayer, LayerControl
+from folium import Map, TileLayer, LayerControl, Html, Element
 from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
 from src.geo_objects.geo_points.image_points import ImagePoint
+
 
 class FoliumMapDrawer:
     """
@@ -15,14 +16,22 @@ class FoliumMapDrawer:
     :type location_y: float
     :param zoom_start: The initial zoom level of the map, defaults to 16
     :type zoom_start: int, optional
+    :param map_tiles: A list of map tile URLs or names
+    :type map_tiles: list, optional
+    :param map_attrs: A list of attributions corresponding to each map tile
+    :type map_attrs: list, optional
+    :param map_names: A list of display names for each map tile layer
+    :type map_names: list, optional
     """
 
     def __init__(self, location_x, location_y, zoom_start=16, **kwargs):
         map_tiles = kwargs.get('map_tiles', ['openstreetmap'])
         map_attrs = kwargs.get('map_attrs', ['Warning: No attribution specified. Please set the attr by --map-attr option.'])
+        map_names = kwargs.get('map_names', [tile for tile in map_tiles])  # Default to map_tiles if map_names not provided
 
-        if len(map_tiles) != len(map_attrs):
-            raise ValueError("The number of map_tiles and map_attrs must be the same.")
+        # Validate that the lengths of map_tiles, map_attrs, and map_names are equal
+        if not (len(map_tiles) == len(map_attrs) == len(map_names)):
+            raise ValueError("The number of map_tiles, map_attrs, and map_names must be the same.")
 
         # Initialize the map without default tiles
         self.fmap = Map(
@@ -31,15 +40,28 @@ class FoliumMapDrawer:
             tiles=None  # We'll add tile layers manually
         )
 
-        # Add each tile layer
+        # Optional: Add a title to the map
+        # You can customize the HTML as needed
+        title_html = f'''
+             <h3 align="center" style="font-size:20px"><b>Map: {map_names[0]}</b></h3>
+             '''
+        self.fmap.get_root().html.add_child(Element(title_html))
+
+        # Add each tile layer with custom names
         self.tile_layers = []
-        for tile, attr in zip(map_tiles, map_attrs):
-            if tile.lower() in ['openstreetmap', 'stamenterrain', 'stamenwatercolor', 'cartodbpositron', 'cartodbdark_matter']:
+        for tile, attr, name in zip(map_tiles, map_attrs, map_names):
+            if tile.lower() in [
+                'openstreetmap',
+                'stamenterrain',
+                'stamenwatercolor',
+                'cartodbpositron',
+                'cartodbdark_matter'
+            ]:
                 # For built-in tile providers
-                tile_layer = TileLayer(tile, name=tile, attr=attr, control=True)
+                tile_layer = TileLayer(tile, name=name, attr=attr, control=True)
             else:
                 # For custom tile URLs
-                tile_layer = TileLayer(tiles=tile, name=tile, attr=attr, control=True)
+                tile_layer = TileLayer(tiles=tile, name=name, attr=attr, control=True)
             tile_layer.add_to(self.fmap)
             self.tile_layers.append(tile_layer)
 
@@ -84,7 +106,15 @@ class FoliumMapDrawer:
             return
         self.fmap.add_child(folium.PolyLine(locations=point_list, **kwargs))
 
-    def draw_points_on_map(self, points, point_type='marker', point_info='', point_color='green', point_radius=8, alpha=0.3):
+    def draw_points_on_map(
+        self,
+        points,
+        point_type='marker',
+        point_info='',
+        point_color='green',
+        point_radius=8,
+        alpha=0.3
+    ):
         """
         Draws points on the map.
 
@@ -120,9 +150,12 @@ class FoliumMapDrawer:
 
             if isinstance(i, RestTrkPoint):
                 # Existing logic for RestTrkPoint remains unchanged
-                popup_info = ('休息點' + '<br>' +
-                              str(i.get_start_time().strftime('%H:%M')) + ' ~ ' + str(i.get_end_time().strftime('%H:%M')) +
-                              '<br>' + 'Elev: ' + str(round(i.elev, 0)) + ' M')
+                popup_info = (
+                    '休息點' + '<br>' +
+                    str(i.get_start_time().strftime('%H:%M')) + ' ~ ' +
+                    str(i.get_end_time().strftime('%H:%M')) +
+                    '<br>' + 'Elev: ' + str(round(i.elev, 0)) + ' M'
+                )
                 popup = folium.Popup(
                     popup_info,
                     max_width=150,
@@ -175,7 +208,12 @@ class FoliumMapDrawer:
 
             else:
                 # Existing logic for other points (e.g., waypoints) remains unchanged
-                popup_info = point_info + str(i.time.strftime('%H:%M')) + '<br>' + i.get_note() + '<br>' + str(round(i.elev, 0)) + " M"
+                popup_info = (
+                    point_info +
+                    str(i.time.strftime('%H:%M')) + '<br>' +
+                    i.get_note() + '<br>' +
+                    str(round(i.elev, 0)) + " M"
+                )
                 popup = folium.Popup(
                     popup_info,
                     max_width=150,
