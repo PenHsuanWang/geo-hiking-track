@@ -1,9 +1,10 @@
 # src/visualization/map_drawer.py
 
 import folium
-from folium import Map, TileLayer, LayerControl, Html, Element
+from folium import Map, TileLayer, LayerControl, Element
 from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
 from src.geo_objects.geo_points.image_points import ImagePoint
+from folium.plugins import Draw
 
 
 class FoliumMapDrawer:
@@ -64,6 +65,25 @@ class FoliumMapDrawer:
                 tile_layer = TileLayer(tiles=tile, name=name, attr=attr, control=True)
             tile_layer.add_to(self.fmap)
             self.tile_layers.append(tile_layer)
+
+        # Add a toolbar using leaflet.pm
+        draw = Draw(
+            draw_options={
+                'polyline': True,
+                'polygon': True,
+                'circle': True,
+                'rectangle': True,
+                'marker': True,
+            },
+            edit_options={
+                'edit': True,
+                'remove': True,
+            }
+        )
+        draw.add_to(self.fmap)
+
+        # Add LayerControl for tile switching
+        # LayerControl(collapsed=False).add_to(self.fmap)
 
         # Add LayerControl to switch between tile layers
         LayerControl().add_to(self.fmap)

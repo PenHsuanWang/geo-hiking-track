@@ -1,4 +1,4 @@
-# tests/test_map_drawer.py
+# tests/test_visualization/test_map_drawer.py
 
 import folium
 from src.visualizartion.map_drawer import FoliumMapDrawer
@@ -21,6 +21,177 @@ def test_map_drawer_initialization_invalid_coordinates():
     with pytest.raises(ValueError):
         FoliumMapDrawer('invalid_lat', 'invalid_lon', zoom_start=12)
 
+
+def test_map_drawer_initialization_with_map_names():
+    """Test initialization with valid map_names."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain']
+    map_attrs = ['Map data © OpenStreetMap contributors', 'Map tiles by Stamen Design']
+    map_names = ['OSM Base', 'Stamen Terrain']
+
+    drawer = FoliumMapDrawer(
+        37.7749, -122.4194,
+        zoom_start=12,
+        map_tiles=map_tiles,
+        map_attrs=map_attrs,
+        map_names=map_names
+    )
+
+    # Verify that the map title is set correctly
+    map_html = drawer.fmap.get_root().render()
+    assert f"Map: {map_names[0]}" in map_html
+
+    # Verify that LayerControl includes the map_names
+    for name in map_names:
+        assert name in map_html  # Ensure the names appear in the LayerControl section of the HTML
+
+
+def test_map_drawer_initialization_with_default_map_names():
+    """Test initialization without providing map_names (should default to map_tiles)."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain']
+    map_attrs = ['Map data © OpenStreetMap contributors', 'Map tiles by Stamen Design']
+
+    drawer = FoliumMapDrawer(
+        37.7749, -122.4194,
+        zoom_start=12,
+        map_tiles=map_tiles,
+        map_attrs=map_attrs
+    )
+
+    map_html = drawer.fmap.get_root().render()
+    for tile in map_tiles:
+        assert tile in map_html  # Ensure the default names (map_tiles) appear in LayerControl
+
+
+def test_map_drawer_initialization_mismatched_map_names():
+    """Test initialization with mismatched number of map_names (should raise ValueError)."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain']
+    map_attrs = ['Map data © OpenStreetMap contributors', 'Map tiles by Stamen Design']
+    map_names = ['OSM Base']  # Only one map_name provided
+
+    with pytest.raises(ValueError, match="The number of map_tiles, map_attrs, and map_names must be the same."):
+        FoliumMapDrawer(
+            37.7749, -122.4194,
+            zoom_start=12,
+            map_tiles=map_tiles,
+            map_attrs=map_attrs,
+            map_names=map_names
+        )
+
+
+def test_map_drawer_add_multiple_tile_layers_with_map_names():
+    """Test adding multiple tile layers with custom map_names."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain', 'Stamen Watercolor']
+    map_attrs = [
+        'Map data © OpenStreetMap contributors',
+        'Map tiles by Stamen Design',
+        'Map tiles by Stamen Design'
+    ]
+    map_names = ['OSM Base', 'Stamen Terrain', 'Stamen Watercolor']
+
+    drawer = FoliumMapDrawer(
+        37.7749, -122.4194,
+        zoom_start=12,
+        map_tiles=map_tiles,
+        map_attrs=map_attrs,
+        map_names=map_names
+    )
+
+    map_html = drawer.fmap.get_root().render()
+    for name in map_names:
+        assert name in map_html
+
+
+def test_map_drawer_add_multiple_tile_layers_without_map_names():
+    """Test adding multiple tile layers without providing map_names."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain', 'Stamen Watercolor']
+    map_attrs = [
+        'Map data © OpenStreetMap contributors',
+        'Map tiles by Stamen Design',
+        'Map tiles by Stamen Design'
+    ]
+
+    drawer = FoliumMapDrawer(
+        37.7749, -122.4194,
+        zoom_start=12,
+        map_tiles=map_tiles,
+        map_attrs=map_attrs
+    )
+
+    map_html = drawer.fmap.get_root().render()
+    for tile in map_tiles:
+        assert tile in map_html
+
+
+def test_map_drawer_duplicate_map_names():
+    """Test initialization with duplicate map_names."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain']
+    map_attrs = ['Map data © OpenStreetMap contributors', 'Map tiles by Stamen Design']
+    map_names = ['Duplicate Name', 'Duplicate Name']
+
+    drawer = FoliumMapDrawer(
+        37.7749, -122.4194,
+        zoom_start=12,
+        map_tiles=map_tiles,
+        map_attrs=map_attrs,
+        map_names=map_names
+    )
+
+    map_html = drawer.fmap.get_root().render()
+    for name in map_names:
+        assert name in map_html
+
+
+def test_map_drawer_layer_control_presence():
+    """Test that LayerControl is added to the map."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain']
+    map_attrs = ['Map data © OpenStreetMap contributors', 'Map tiles by Stamen Design']
+    map_names = ['OSM Base', 'Stamen Terrain']
+
+    drawer = FoliumMapDrawer(
+        37.7749, -122.4194,
+        zoom_start=12,
+        map_tiles=map_tiles,
+        map_attrs=map_attrs,
+        map_names=map_names
+    )
+
+    # Check for LayerControl in the map's children
+    layer_controls = [
+        child for child in drawer.fmap._children.values()
+        if isinstance(child, folium.map.LayerControl)
+    ]
+    assert len(layer_controls) == 1
+
+
+def test_map_drawer_save_with_map_names(tmp_path):
+    """Test saving the map with multiple tile layers and map_names."""
+    map_tiles = ['OpenStreetMap', 'Stamen Terrain']
+    map_attrs = ['Map data © OpenStreetMap contributors', 'Map tiles by Stamen Design']
+    map_names = ['OSM Base', 'Stamen Terrain']
+
+    drawer = FoliumMapDrawer(
+        37.7749, -122.4194,
+        zoom_start=12,
+        map_tiles=map_tiles,
+        map_attrs=map_attrs,
+        map_names=map_names
+    )
+    output_file = tmp_path / "test_map_with_names.html"
+    drawer.save(str(output_file))
+
+    assert output_file.exists()
+
+    # Optionally, verify that the saved HTML contains the map title
+    with open(output_file, 'r', encoding='utf-8') as f:
+        map_html = f.read()
+    assert f"Map: {map_names[0]}" in map_html
+
+    # Verify that the layer names are present in the HTML
+    for name in map_names:
+        assert f'"{name}"' in map_html  # LayerControl uses JSON to define layers
+
+
+# Existing test cases below...
 
 def test_map_drawer_add_poly_line():
     """Test adding a valid polyline."""
@@ -68,6 +239,7 @@ def test_map_drawer_draw_points_on_map_image_point():
 
 
 def test_map_drawer_draw_points_on_map_rest_trk_point():
+    """Test drawing RestTrkPoint on the map."""
     drawer = FoliumMapDrawer(0, 0)
     rest_point = RestTrkPoint(
         time=datetime.datetime(2023, 10, 1, 10, 0, 0),
