@@ -191,6 +191,38 @@ def test_map_drawer_save_with_map_names(tmp_path):
         assert f'"{name}"' in map_html  # LayerControl uses JSON to define layers
 
 
+# Additional Tests for CSS Injection and Image Popup
+
+def test_map_drawer_css_injection():
+    """Test that CSS for popup image constraints is injected into the map HTML."""
+    drawer = FoliumMapDrawer(37.7749, -122.4194, zoom_start=12)
+    map_html = drawer.fmap.get_root().render()
+
+    assert ".leaflet-popup-content img" in map_html, "CSS selector for popup images not found."
+    assert "max-width: 300px;" in map_html, "CSS max-width for popup images not found."
+    assert "height: auto;" in map_html, "CSS height:auto for popup images not found."
+
+
+def test_map_drawer_image_point_popup_includes_img_tag():
+    """Test that an ImagePoint's popup includes an <img> tag, which will be constrained by the CSS."""
+    drawer = FoliumMapDrawer(37.7749, -122.4194, zoom_start=12)
+    image_point = ImagePoint(
+        file_name='test_image.jpg',
+        time=datetime.datetime(2023, 10, 1, 12, 0, 0),
+        lat=37.7749,
+        lon=-122.4194,
+        elev=15.5,
+        image_url='http://example.com/image.jpg',
+        additional_info='Test image'
+    )
+    drawer.draw_points_on_map([image_point], point_color='red')
+    map_html = drawer.fmap.get_root().render()
+
+    # Check that the img tag is present inside popup content
+    assert "<img src=\"http://example.com/image.jpg\"" in map_html, "Popup <img> not found for ImagePoint."
+
+
+
 # Existing test cases below...
 
 def test_map_drawer_add_poly_line():
