@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import Mock, patch, mock_open
 from reportlab.lib.pagesizes import letter
-from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
-from src.visualizartion.report_generator import ReportGenerator
+from geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
+from visualizartion.report_generator import ReportGenerator
 
 
 # Test the default behavior of generate_report

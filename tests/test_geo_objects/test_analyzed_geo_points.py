@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime, timedelta
-from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate, \
+from geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate, \
     SeedRestPoint  # Replace 'your_module' with the actual module name
 
 

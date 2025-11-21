@@ -1,10 +1,10 @@
 
 from typing import Union
-from src.geo_objects.geo_tracks.basic_track import BasicTracks
-from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
-from src.geo_objects.geo_points.basic_point import BasicPoint
-from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
-from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint
+from .basic_track import BasicTracks
+from .raw_geo_tracks import RawTrackObject
+from ..geo_points.basic_point import BasicPoint
+from ..geo_points.raw_geo_points import RawTrkPoint
+from ..geo_points.analyzed_geo_points import AnalyzedTrkPoint
 
 
 class AnalyzedTracks(BasicTracks):

@@ -8,7 +8,7 @@ specific function like clustering closing point while tracker in rest
 import math
 import datetime
 
-from src.geo_objects.geo_points.basic_point import BasicPoint
+from .basic_point import BasicPoint
 
 
 class AnalyzedTrkPoint(BasicPoint):
