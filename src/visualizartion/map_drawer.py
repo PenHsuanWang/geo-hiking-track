@@ -3,8 +3,8 @@
 import folium
 from folium import Map, TileLayer, LayerControl, Element
 from folium.plugins import Draw
-from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
-from src.geo_objects.geo_points.image_points import ImagePoint
+from geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
+from geo_objects.geo_points.image_points import ImagePoint
 
 
 class FoliumMapDrawer:

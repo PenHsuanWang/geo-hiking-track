@@ -4,8 +4,8 @@ import os
 import json
 import tempfile
 from unittest.mock import patch, MagicMock
-from src.geoanalyzer.images.image_parser import ImageParser
-from src.geo_objects.geo_points.image_points import ImagePoint
+from geoanalyzer.images.image_parser import ImageParser
+from geo_objects.geo_points.image_points import ImagePoint
 import datetime
 from PIL import Image
 import pytest

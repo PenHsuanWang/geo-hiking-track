@@ -2,9 +2,9 @@ import pytest
 import datetime
 from unittest.mock import Mock, patch
 from unittest.mock import MagicMock
-from src.geoanalyzer.tracks.gps_parser import parse_gpx, extract_waypoint_from_xmldoc, extract_track_point_from_xmldoc, parse_time, GpxParser
+from geoanalyzer.tracks.gps_parser import parse_gpx, extract_waypoint_from_xmldoc, extract_track_point_from_xmldoc, parse_time, GpxParser
 
-from src.geoanalyzer.tracks.gps_parser import GpxParser
+from geoanalyzer.tracks.gps_parser import GpxParser
 from xml.dom.minidom import Document, Node
 
 
@@ -103,9 +103,9 @@ def test_GpxParser_init():
     mock_track_point.appendChild(ele_node_trkpt)
 
     # Existing mocking and test logic
-    with patch('src.geoanalyzer.tracks.gps_parser.parse_gpx') as mock_parse_gpx, \
-            patch('src.geoanalyzer.tracks.gps_parser.extract_waypoint_from_xmldoc') as mock_extract_waypoint, \
-            patch('src.geoanalyzer.tracks.gps_parser.extract_track_point_from_xmldoc') as mock_extract_track_point:
+    with patch('geoanalyzer.tracks.gps_parser.parse_gpx') as mock_parse_gpx, \
+            patch('geoanalyzer.tracks.gps_parser.extract_waypoint_from_xmldoc') as mock_extract_waypoint, \
+            patch('geoanalyzer.tracks.gps_parser.extract_track_point_from_xmldoc') as mock_extract_track_point:
         mock_parse_gpx.return_value = 'xmldoc'
         mock_extract_waypoint.return_value = [mock_waypoint]
         mock_extract_track_point.return_value = [mock_track_point]

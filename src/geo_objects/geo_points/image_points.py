@@ -1,6 +1,6 @@
 # src/geo_objects/geo_points/image_points.py
 
-from src.geo_objects.geo_points.basic_point import BasicPoint
+from .basic_point import BasicPoint
 
 
 class ImagePoint(BasicPoint):

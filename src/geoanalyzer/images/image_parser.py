@@ -3,7 +3,7 @@ import datetime
 import json
 from typing import List, Tuple, Dict, Optional, Any
 from PIL import Image, ExifTags
-from src.geo_objects.geo_points.image_points import ImagePoint
+from geo_objects.geo_points.image_points import ImagePoint
 
 
 class ImageParser:

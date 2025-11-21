@@ -1,6 +1,6 @@
 import pytest
 from datetime import datetime
-from src.geo_objects.geo_points.basic_point import BasicPoint  # replace 'your_module' with the actual module name where BasicPoint is defined
+from geo_objects.geo_points.basic_point import BasicPoint  # replace 'your_module' with the actual module name where BasicPoint is defined
 
 
 # Test the BasicPoint class

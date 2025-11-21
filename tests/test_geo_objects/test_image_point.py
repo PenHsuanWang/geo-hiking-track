@@ -2,7 +2,7 @@
 
 import datetime
 import pytest
-from src.geo_objects.geo_points.image_points import ImagePoint
+from geo_objects.geo_points.image_points import ImagePoint
 
 def test_image_point_initialization_all_params():
     """Test initialization with all parameters provided."""

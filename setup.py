@@ -12,7 +12,8 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.10',
     ],
-    packages=find_packages(),  # Automatically discover and include all packages
+    package_dir={'': 'src'},
+    packages=find_packages(where='src'),
     install_requires=[
         'click',
         'folium>=0.14.0',
@@ -33,7 +34,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'gpxana=src.cli:main',
+            'gpxana=cli:main',
         ]
     }
 )

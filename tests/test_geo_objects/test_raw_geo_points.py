@@ -2,7 +2,7 @@
 # test base function and all properties getter is fine
 
 import pytest
-from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
+from geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
 
 
 def test_raw_geo_point_creation_and_getter():

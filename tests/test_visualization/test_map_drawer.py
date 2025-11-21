@@ -1,9 +1,9 @@
 # tests/test_visualization/test_map_drawer.py
 
 import folium
-from src.visualizartion.map_drawer import FoliumMapDrawer
-from src.geo_objects.geo_points.image_points import ImagePoint
-from src.geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
+from visualizartion.map_drawer import FoliumMapDrawer
+from geo_objects.geo_points.image_points import ImagePoint
+from geo_objects.geo_points.analyzed_geo_points import RestTrkPoint
 import datetime
 import pytest
 

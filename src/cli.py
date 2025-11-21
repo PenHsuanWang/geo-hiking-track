@@ -11,11 +11,11 @@ To run the target GPX with analyzer and show the tracks.
 
 import click
 import os
-from src.geoanalyzer.tracks import gps_parser
-from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
-from src.geoanalyzer.images.image_parser import ImageParser
-from src.visualizartion.map_drawer import FoliumMapDrawer
-from src.visualizartion.report_generator import ReportGenerator
+from geoanalyzer.tracks import gps_parser
+from geoanalyzer.tracks.track_analyzer import TrackAnalyzer
+from geoanalyzer.images.image_parser import ImageParser
+from visualizartion.map_drawer import FoliumMapDrawer
+from visualizartion.report_generator import ReportGenerator
 
 
 @click.command()

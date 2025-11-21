@@ -4,7 +4,7 @@ import os
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
-from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
+from geoanalyzer.tracks.track_analyzer import TrackAnalyzer
 
 
 class ReportGenerator:

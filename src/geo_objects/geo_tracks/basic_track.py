@@ -1,7 +1,7 @@
 from typing import Union
-from src.geo_objects.geo_points.basic_point import BasicPoint
-from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint
-from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
+from ..geo_points.basic_point import BasicPoint
+from ..geo_points.analyzed_geo_points import AnalyzedTrkPoint
+from ..geo_points.raw_geo_points import RawTrkPoint
 
 
 class BasicTracks:

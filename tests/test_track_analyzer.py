@@ -1,10 +1,10 @@
 import pytest, math
 from datetime import datetime, timedelta
-from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
-from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint
-from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
-from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer, smoothing_tracks, find_rest_point, sum_numeric_deltas, sum_timedelta_deltas
-from src.geoanalyzer.tracks.track_analyzer import do_analyzing
+from geo_objects.geo_points.raw_geo_points import RawTrkPoint
+from geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint
+from geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
+from geoanalyzer.tracks.track_analyzer import TrackAnalyzer, smoothing_tracks, find_rest_point, sum_numeric_deltas, sum_timedelta_deltas
+from geoanalyzer.tracks.track_analyzer import do_analyzing
 
 
 class MockTrackObject(RawTrackObject):

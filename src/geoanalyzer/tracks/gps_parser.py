@@ -5,12 +5,10 @@ from typing import Optional, List
 
 from xml.dom import minidom
 from xml.dom.minidom import Node, Element, Text
-# from src.geoanalyzer.tracks import track_objects
 
 
-from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
-from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
-# from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
+from geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
+from geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
 
 
 def parse_gpx(input_gpx_file: str) -> minidom.Document:

@@ -1,9 +1,9 @@
 import datetime
 import math
 from typing import List
-from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint
-from src.geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate
-from src.geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
+from geo_objects.geo_points.raw_geo_points import RawTrkPoint
+from geo_objects.geo_points.analyzed_geo_points import AnalyzedTrkPoint, RestTrkPoint, RestTrkPointCandidate
+from geo_objects.geo_tracks.analyzed_geo_tracks import AnalyzedTrackObject
 
 #
 # def sum_delta_between_every_element(input_list: List[Union[float, datetime.timedelta]]) -> float:
