@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='gpx-analyzer',
     version='0.1',
-    description='A cli tool to extract gpx file and generate map',
+    description='A library and CLI tool to parse GPX files and generate interactive maps',
     author='PenHsuanWang',
     license='MIT',
     platforms=['unix', 'linux', 'osx', 'win32'],
@@ -15,6 +15,10 @@ setup(
     packages=find_packages(),  # Automatically discover and include all packages
     install_requires=[
         'click',
+        'folium>=0.14.0',
+        'numpy>=1.25.0',
+        'Pillow>=9.0.0',
+        'reportlab>=4.0.0',
     ],
     python_requires='>=3.10',
     zip_safe=False,

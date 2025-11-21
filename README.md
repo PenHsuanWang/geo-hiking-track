@@ -6,33 +6,105 @@
 
 This Python-based project is designed for handling and analyzing geographic data, specifically GPS track points and waypoints. It provides a comprehensive framework for working with this data, including their time, latitude, longitude, and elevation.
 
+The project can be used both as a **library** (for integration into other Python projects) and as a **CLI tool** (for standalone usage).
+
 ### Output Map after Analyzing the GPX File showing the tracks, rest points, and waypoints
 ![Extract Rest Point](https://i.imgur.com/2D9vuSp.png)
 ![extract waypoint](https://i.imgur.com/zEc8DBV.png)
 
-## Usage of CLI Tool
+## Installation
 
-To use the `cli.py` script, you need to provide the path to the GPX file you want to load and the directory where you want to save the output map. You can do this using the `--gpx-file` and `--output-map` options, respectively.
+### As a Library
 
-Additionally, you can specify the map tile provider and the attribution of the map using the `--map-tile` and `--map-attr` options. If not provided, these options default to 'OpenStreetMap' and 'Map data © OpenStreetMap contributors', respectively.
-
-Here's an example of how to use the `cli.py` script:
+You can install this package using pip:
 
 ```bash
-python cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory
+pip install git+https://github.com/PenHsuanWang/geo-hiking-track.git
+```
+
+Or for development:
+
+```bash
+git clone https://github.com/PenHsuanWang/geo-hiking-track.git
+cd geo-hiking-track
+pip install -e .
+```
+
+## Usage as a Library
+
+After installation, you can import and use `GpxParser` and other components in your Python code:
+
+```python
+from src import GpxParser, TrackAnalyzer, FoliumMapDrawer
+
+# Parse GPX file
+gpx_parser = GpxParser("path/to/your/file.gpx")
+
+# Analyze the track
+track_analyzer = TrackAnalyzer(gpx_parser.get_raw_track_object())
+main_track = track_analyzer.get_main_track()
+
+# Create a map
+start_point = main_track.get_start_point()
+map_drawer = FoliumMapDrawer(
+    location_x=start_point.lat,
+    location_y=start_point.lon,
+    zoom_start=15
+)
+
+# Add tracks and points to the map
+map_drawer.add_tracks(main_track, weight=4, color='blue')
+map_drawer.draw_points_on_map(
+    track_analyzer.get_rest_point_list(),
+    point_type='circle',
+    point_info='Rest Point',
+    point_color='green',
+    point_radius=10,
+    alpha=0.3
+)
+
+# Save the map
+map_drawer.save('output_map.html')
+```
+
+**Note:** After installing via `pip install`, import from the `src` package as shown above.
+
+See `example_library_usage.py` for a complete working example.
+
+### Available Classes
+
+- **`GpxParser`**: Parse GPX files and extract waypoints and track points
+- **`TrackAnalyzer`**: Analyze GPS tracks, identify rest points, and extract waypoints
+- **`FoliumMapDrawer`**: Create interactive maps with tracks, points, and custom tiles
+- **`ReportGenerator`**: Generate text/markdown reports from track analysis
+
+## Usage of CLI Tool
+
+After installation via pip, the `gpxana` command is available globally:
+
+```bash
+gpxana --gpx-file <input_file_path> --output-map <output_file_path>
+```
+
+To run the target GPX with analyzer and show the tracks:
+
+### Basic Usage
+
+```bash
+gpxana --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory
 ```
 
 * Optional: If you want to generate a report, add the `--output-report` option followed by the directory where you want to save the output report:
 
     ```bash
-    python src/cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --output-report /path/to/report/directory
+    gpxana --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --output-report /path/to/report/directory
     ```
 
     Replace `/path/to/report/directory` with the directory where you want to save the output report.
 * Optional: You can also specify the map tile provider and the attribution of the map using the `--map-tile` and `--map-attr` options. If not provided, these options default to 'OpenStreetMap' and 'Map data © OpenStreetMap contributors', respectively:
 
     ```bash
-    python src/cli.py --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --map-tile 'OpenStreetMap' --map-attr 'Map data © OpenStreetMap contributors'
+    gpxana --gpx-file /path/to/your/gpx/file --output-map /path/to/output/directory --map-tile 'OpenStreetMap' --map-attr 'Map data © OpenStreetMap contributors'
     ```
 
 ::: tip
