@@ -35,7 +35,7 @@ pip install -e .
 After installation, you can import and use `GpxParser` and other components in your Python code:
 
 ```python
-from src import GpxParser, TrackAnalyzer, FoliumMapDrawer
+from gpxana import GpxParser, TrackAnalyzer, FoliumMapDrawer
 
 # Parse GPX file
 gpx_parser = GpxParser("path/to/your/file.gpx")
@@ -183,7 +183,7 @@ The package also follows good coding practices such as using docstrings for docu
 To use these packages, import the desired classes and create instances as needed. For example, to create a new `WayPoint`:
 
 ```python
-from src.geo_objects.geo_points.raw_geo_points import WayPoint
+from geo_objects.geo_points.raw_geo_points import WayPoint
 
 waypoint = WayPoint(time, lat, lon, elev, note)
 
@@ -192,8 +192,8 @@ waypoint = WayPoint(time, lat, lon, elev, note)
 To use these packages, import the desired classes and create instances as needed. For example, to create a new `RawTrackObject`:
 
 ```python
-from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
-from src.geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
+from geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
+from geo_objects.geo_points.raw_geo_points import RawTrkPoint, WayPoint
 
 raw_track_object = RawTrackObject()
 raw_track_object.add_track_point(RawTrkPoint(time, lat, lon, elev))
@@ -211,8 +211,8 @@ The `geoanalyzer/tracks` package is a collection of modules that provide functio
 Here's an example of how to use the `TrackAnalyzer` class:
 
 ```python
-from src.geoanalyzer.tracks.track_analyzer import TrackAnalyzer
-from src.geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
+from geoanalyzer.tracks.track_analyzer import TrackAnalyzer
+from geo_objects.geo_tracks.raw_geo_tracks import RawTrackObject
 
 # Assume raw_track_object is an instance of RawTrackObject
 analyzer = TrackAnalyzer(raw_track_object)
@@ -301,7 +301,7 @@ Here are the main functions of the `FoliumMapDrawer` class:
 Here's an example of how to use the `FoliumMapDrawer` class:
 
 ```python
-from src.visualization.map_drawer import FoliumMapDrawer
+from visualization.map_drawer import FoliumMapDrawer
 
 # Initialize a new map centered at the given location with the specified zoom level
 map_drawer = FoliumMapDrawer(location_x=37.7749, location_y=-122.4194, zoom_start=12)
